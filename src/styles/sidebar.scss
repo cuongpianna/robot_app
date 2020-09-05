@@ -1,0 +1,292 @@
+#app {
+
+    .main-container {
+        //height: calc(100% - 60px);
+        transition: margin-left .28s;
+        margin-left: $sideBarWidth;
+        position: relative;
+        // cuongsualayout
+        //overflow-y: auto;
+    }
+
+    .sidebar-container {
+        transition: width 0.28s;
+        width: $sideBarWidth !important;
+        background-color: $menuBg;
+        position: fixed;
+        font-size: 0px;
+        bottom: 0;
+        left: 0;
+        z-index: 1001;
+        overflow: hidden;
+        top: 60px;
+        height: calc(100vh - 60px);
+        border-right: 1px solid #DCDFE6;
+        box-sizing: border-box;
+        //min-height: 597px;
+        // reset element-ui css
+        .horizontal-collapse-transition {
+            transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+        }
+
+        .scrollbar-wrapper {
+            overflow-x: hidden !important;
+        }
+
+        .el-scrollbar__bar.is-vertical {
+            right: 0px;
+        }
+
+        .el-scrollbar {
+            height: 100%;
+        }
+
+        .el-scrollbar__wrap {
+            height: calc(100% - 30px);
+        }
+
+        &.has-logo {
+            .el-scrollbar {
+                height: calc(100% - 50px);
+            }
+        }
+
+        .is-horizontal {
+            display: none;
+        }
+
+        a {
+            display: inline-block;
+            width: 100%;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .svg-icon {
+            margin-right: 16px;
+        }
+
+        .el-menu {
+            border: none;
+            height: 100%;
+            width: 100% !important;
+            // margin-bottom: 30px;
+        }
+        // menu hover
+        .submenu-title-noDropdown,
+        .el-submenu__title {
+            &:hover {
+                background-color: $menuHover !important;
+            }
+        }
+
+        .is-active > .el-submenu__title {
+            color: $subMenuActiveText !important;
+        }
+
+        & .nest-menu .el-submenu > .el-submenu__title,
+        & .el-submenu .el-menu-item {
+            min-width: $sideBarWidth !important;
+            background-color: $subMenuBg !important;
+
+            &:hover {
+                background-color: $subMenuHover !important;
+            }
+        }
+    }
+
+    .hideSidebar {
+        .sidebar-container {
+            width: 54px !important;
+        }
+
+        .main-container {
+            margin-left: 54px;
+        }
+
+        .submenu-title-noDropdown {
+            padding: 0 !important;
+            position: relative;
+
+            .el-tooltip {
+                padding: 0 !important;
+
+                .svg-icon {
+                    margin-left: 20px;
+                }
+            }
+        }
+
+        .el-submenu {
+            overflow: hidden;
+
+            & > .el-submenu__title {
+                padding: 0 !important;
+
+                .svg-icon {
+                    margin-left: 20px;
+                }
+
+                .el-submenu__icon-arrow {
+                    display: none;
+                }
+            }
+        }
+
+        .el-menu--collapse {
+            .el-submenu {
+                & > .el-submenu__title {
+                    & > span {
+                        height: 0;
+                        width: 0;
+                        overflow: hidden;
+                        visibility: hidden;
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+
+    .el-menu--collapse .el-menu .el-submenu {
+        min-width: $sideBarWidth !important;
+    }
+    // mobile responsive
+    .mobile {
+        .main-container {
+            margin-left: 0px;
+        }
+
+        .sidebar-container {
+            transition: transform .28s;
+            width: $sideBarWidth !important;
+        }
+
+        &.hideSidebar {
+            .sidebar-container {
+                pointer-events: none;
+                transition-duration: 0.3s;
+                transform: translate3d(-$sideBarWidth, 0, 0);
+            }
+        }
+    }
+
+    .withoutAnimation {
+
+        .main-container,
+        .sidebar-container {
+            transition: none;
+        }
+    }
+}
+
+// when menu collapsed
+.el-menu--vertical {
+  &>.el-menu {
+    .svg-icon {
+      margin-right: 16px;
+    }
+  }
+
+  .nest-menu .el-submenu>.el-submenu__title,
+  .el-menu-item {
+    &:hover {
+      // you can use $subMenuHover
+      background-color: $menuHover !important;
+    }
+  }
+
+  // the scroll bar appears when the subMenu is too long
+  >.el-menu--popup {
+    max-height: 100vh;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar-track-piece {
+      background: #d3dce6;
+    }
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #99a9bf;
+      border-radius: 20px;
+    }
+  }
+}
+
+.hideSidebar {
+    /deep/.menu-wrapper {
+        .el-submenu {
+            svg {
+                width: 100%;
+                margin-right: 0;
+                height: 1.5em;
+            }
+        }
+
+        .el-menu-item {
+            svg {
+                width: 100%;
+                margin-right: 0;
+                height: 1.2em;
+                margin: 0 !important;
+            }
+        }
+
+        .el-submenu {
+            .el-submenu__title {
+                svg {
+                    margin: 0;
+                    font-size: 22px;
+                    height: 1.2em;
+                }
+            }
+        }
+    }
+}
+
+.el-menu-item {
+    padding: 0 !important;
+
+    span {
+        color: #313131;
+    }
+
+    &.is-active {
+        background: #d8d8d8 !important;
+
+        /*span {
+            color: #409EFF;
+        }
+
+        svg {
+            color: #409EFF;
+        }*/
+    }
+}
+
+.el-submenu {
+    .el-submenu__title {
+        padding: 0 !important;
+      color: #000000 !important;
+    }
+
+    .el-submenu div.el-submenu__title{
+    padding-left: 40px !important;
+  }
+
+    .nest-menu {
+        .el-menu-item {
+            padding-left: 10px !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .el-scrollbar{
+        height: 400px !important;
+        background: red !important;
+    }
+}

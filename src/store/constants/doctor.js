@@ -1,0 +1,11 @@
+export const ACT_FETCH_DOCTOR_PAGING = 'fetchAllDoctors'
+export const ACT_UPDATE_DOCTOR_STATUS = 'actUpdateDoctorStatus'
+export const ACT_DELETE_DOCTOR = 'actDeleteDoctor'
+export const ACT_INSERT_DOCTOR = 'actInsertDoctor'
+export const ACT_EDIT_DOCTOR = 'actEditDoctor'
+export const ACT_FETCH_ONE_DOCTOR = 'actFetchOneDoctor'
+export const ACT_GET_ALL_DOCTORS = 'actGetAllDoctors'
+
+export const MUTATION_FETCH_ALL_DOCTOR = 'mutationFetchAllDoctors'
+export const MUTATION_DELETE_DOCTOR = 'mutationDeleteUser'
+export const MUTATION_GET_ALL_DOCTORS = 'mutationGetAllDoctors'

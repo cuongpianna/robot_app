@@ -1,0 +1,11 @@
+export const ACT_GET_ROBOT_VERSION_PAGING = 'getPagingRobotVersion'
+export const ACT_UPDATE_ROBOT_VERSION_STATUS = 'updateRobotVersionStatus'
+export const ACT_DELETE_ROBOT_VERSION = 'deleteRobotVersion'
+export const ACT_INSERT_ROBOT_VERSION = 'insertRobotVersion'
+export const ACT_EDIT_ROBOT_VERSION = 'editRobotVersion'
+export const ACT_FETCH_ONE_ROBOT_VERSION = 'getOneRobotVersion'
+export const ACT_GET_ALL_ROBOT_VERSION = 'getAllRobotVersion'
+
+export const MUTATION_GET_PAGING_ROBOT_VERSION = 'mutationGetPagingRobotVersion'
+export const MUTATION_DELETE_ROBOT_VERSION = 'mutationDeleteRobotVersion'
+export const MUTATION_GET_ALL_ROBOT_VERSION = 'mutationGetAllRobotVersion'

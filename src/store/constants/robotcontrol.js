@@ -1,0 +1,5 @@
+export const MUTATION_UPDATE_ROBOT_STATUS = 'mutationUpdateRobotStatus'
+export const MUTATION_UPDATE_AREA_LIST = 'mutationUpdateRoomList'
+export const MUTATION_CHANGE_WORK_MODE = 'mutationChangeWorkMode'
+export const MUTATION_CHANGE_WORK_STATUS = 'mutationChangeWorkStatus'
+export const MUTATION_CHANGE_AUTOMATIC = 'mutationChangeAutomatic'

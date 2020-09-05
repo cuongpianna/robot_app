@@ -1,0 +1,2 @@
+D:\Oriwave\MTTracking\MTracking\2. Source Code\MTracking\MTracking.IOTApp\obj\Debug\MTracking.IOTApp.njsprojAssemblyReference.cache
+D:\Oriwave\MTTracking\MTracking\2. Source Code\MTracking\MTracking.IOTApp\bin\Microsoft.NodejsTools.WebRole.dll

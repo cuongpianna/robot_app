@@ -1,0 +1,11 @@
+export const ACT_FETCH_ROBOT = 'fetchRobots'
+export const ACT_FETCH_AREA_PARENT = 'fetchParentAreas'
+export const ACT_FETCH_AREA_ALL = 'fetchAllAreasByParent'
+export const ACT_GET_ALL_CHILD_AREA = 'getAllChildArea'
+
+export const MUTATION_FETCH_ROBOT = 'mutationfetchRobots'
+export const MUTATION_FETCH_ALL = 'mutationFetchAllAreasParent'
+export const MUTATION_FETCH_AREA_PARENT = 'mutationFetchAllParentAreas'
+export const MUTATION_SET_CURRENT_MAP_OBJECT = 'mutationSetCurrentMapObject'
+export const MUTATION_GET_ALL_CHILD_AREA = 'mutationGetAllChildArea'
+export const MUTATION_UPDATE_POSITION_ROBOT = 'mutationUpdatePositionRobot'

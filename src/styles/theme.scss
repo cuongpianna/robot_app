@@ -1,0 +1,52 @@
+$primaryColor:#3187e0;
+
+// stylelint-disable declaration-no-important
+
+// Flex variation
+//
+// Custom styles for additional flex alignment options.
+.text-link {
+  color:$primaryColor;
+  cursor: pointer;
+}
+.text-center {
+  display: block;
+  text-align: center !important;
+}
+
+.filter-container {
+  margin-bottom: 30px;
+}
+
+/** hotel list */
+.heading-page {
+  padding: 15px 0;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eaeaea;
+}
+.right-actions {
+  float: right;
+}
+.list-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: center!important;
+  -ms-flex-pack: center!important;
+  justify-content: flex-center!important;
+  .list-item {
+    min-width: 260px;
+    margin-bottom: 15px;
+    padding: 0 15px;
+  }
+}
+.thumbnail {
+  position: relative;
+  padding-bottom: 100%;
+  img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+  }
+}

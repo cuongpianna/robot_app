@@ -1,0 +1,5 @@
+D:\Oriwave\Robot Vibot\2. Source Code\RobotVibot\MTracking.IOTApp\obj\Debug\RobotVibot.IOTApp.njsprojAssemblyReference.cache
+D:\Oriwave\Robot Vibot\2. Source Code\RobotVibot\MTracking.IOTApp\bin\Microsoft.NodejsTools.WebRole.dll
+D:\Oriwave\Robot Vibot\2. Source Code\RobotVibot\RobotVibot.IOTApp\bin\Microsoft.NodejsTools.WebRole.dll
+D:\Oriwave\MTTracking\Robot ViBot\2. Source Code\RobotVibot\RobotVibot.IOTApp\obj\Debug\RobotVibot.IOTApp.njsprojAssemblyReference.cache
+D:\Oriwave\MTTracking\Robot ViBot\2. Source Code\RobotVibot\RobotVibot.IOTApp\bin\Microsoft.NodejsTools.WebRole.dll
