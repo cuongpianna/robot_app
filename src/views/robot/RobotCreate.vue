@@ -82,14 +82,14 @@
                       >
                         <template slot="singleLabel" slot-scope="props">
                           <div>
-                            <img class="option__image" :src="require(`@/assets/${props.option}.svg`)" style="width:30px; height:30px">
+                            <img class="option__image" :src="require(`@/assets/${props.option}`)" style="width:30px; height:30px">
                             <span class="option__desc">
                               <span class="option__title" />
                             </span>
                           </div>
                         </template>
                         <template slot="option" slot-scope="props">
-                          <img class="option__image pull-left" :src="require(`@/assets/${props.option}.svg`)" style="width:30px; height:30px">
+                          <img class="option__image pull-left" :src="require(`@/assets/${props.option}`)" style="width:30px; height:30px">
                           <div class="option__desc pull-left">
                             <span class="option__title" />
                           </div>
@@ -356,7 +356,7 @@
         },
         data() {
             return {
-                robotIcons: ['robot1', 'robot2', 'robot3', 'robot4', 'robot5'],
+                robotIcons: ['robot1.svg', 'robot2.svg', 'robot3.svg', 'robot4.svg', 'robot5.svg', 'robot6.png', 'robot7.png', 'robot8.png', 'robot9.png', 'robot10.png'],
                 parentId: '',
                 cameraSelected: [],
                 showDialog: false,

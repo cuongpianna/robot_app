@@ -23,18 +23,6 @@
               <rect x="1" y="1" width="5" height="5" style="stroke: none; fill:#000000;" />
             </marker>
 
-<!--             arrow head-->
-<!--                        <line-->
-<!--                          :x1="robotDirection.x1"-->
-<!--                          :x2="robotDirection.x2"-->
-<!--                          :y1="robotDirection.y1"-->
-<!--                          :y2="robotDirection.y2"-->
-<!--                          stroke="red"-->
-<!--                          stroke-width="4"-->
-<!--                          marker-end="url(#red-arrowhead)"-->
-<!--                          class="line"-->
-<!--                        />-->
-
             <line
               :x1="robotPoint[0]"
               :x2="arrowPoint[0]"

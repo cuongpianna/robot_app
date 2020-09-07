@@ -39,8 +39,15 @@
     <Content Include=".env.production" />
     <Content Include=".env.staging" />
     <Content Include=".eslintrc.js" />
+    <Content Include="public\css\default-material.css" />
+    <Content Include="public\css\font.css" />
+    <Content Include="public\css\material-icon.css" />
+    <Content Include="public\css\material.css" />
+    <Content Include="public\css\multiselect.css" />
+    <Content Include="public\css\vue-material.css" />
     <Content Include="public\favicon.ico" />
     <Content Include="public\index.html" />
+    <Content Include="public\jisti.js" />
     <Content Include="src\App.vue" />
     <Content Include="src\assets\404_images\404.png" />
     <Content Include="src\assets\404_images\404_cloud.png" />
@@ -630,6 +637,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="dist\" />
+    <Folder Include="public\css\" />
     <Folder Include="src\assets\img\" />
     <Folder Include="src\assets\img\scada\" />
     <Folder Include="src\assets\img\scada\svg\" />

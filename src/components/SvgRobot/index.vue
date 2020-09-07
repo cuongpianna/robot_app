@@ -1,7 +1,8 @@
 <template>
   <div class="robot-run-container" :style="style" :class="{'none' : left === 0 && top === 0 }">
     <md-tooltip md-direction="top">{{ title }}</md-tooltip>
-    <img class="imgRobot" :src="require(`@/assets/${icon}.svg`)" alt="">
+
+    <img class="imgRobot" :src="require(`@/assets/${icon}`)" alt="">
   </div>
 </template>
 
@@ -28,7 +29,7 @@
             },
             icon: {
               type: String,
-              default: 'robot1'
+              default: 'robot1.svg'
             }
         },
         computed: {

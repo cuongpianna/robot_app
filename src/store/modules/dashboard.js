@@ -65,12 +65,17 @@ const mutations = {
         const robotCode = message_dump[message_dump.length - 1]
         const width = parseInt(message_dump[4])
         const height = parseInt(message_dump[5])
+        const deg = message_dump[6]
         var robotsList = JSON.parse(JSON.stringify(state.listAllChildArea))
         for(const item of robotsList) {
             for(const robot of item.robots) {
+                robot.robotPoint = []
                 if(robot.code === robotCode) {
                     robot.mapWidth = width / item.width
                     robot.mapHeight = height / item.height
+                    robot.point_x = width
+                    robot.point_y = height
+                    robot.deg = deg
                     break
                 }
             }

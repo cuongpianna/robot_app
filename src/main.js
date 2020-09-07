@@ -11,7 +11,6 @@ import pretty from 'pretty'
 import VueParticles from 'vue-particles'
 
 import '@/assets/js/jspmeg.js'
-import '@/assets/js/jspmeg.js'
 import '@/styles/index.scss' // global css
 import '@/icons' // icon
 import 'element-ui/lib/theme-chalk/index.css'
@@ -20,6 +19,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
+import 'material-design-icons/iconfont/material-icons.css'
 import vuetify from '@/plugins/vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import * as filters from './filters'

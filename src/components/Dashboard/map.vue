@@ -13,7 +13,7 @@
                 <span class="robot-value">
                   {{ item.name }}
 
-                  <img class="imgRobot" :src="require(`@/assets/${item.icon}.svg`)" alt="" style="width: 25px">
+                  <img class="imgRobot" :src="require(`@/assets/${item.icon}`)" alt="" style="width: 25px">
 
                   <el-tooltip
                     class="item"
@@ -39,6 +39,28 @@
             </div>
           </div>
           <div :id="'map-' + area.id" class="map-container">
+            <svg class="svgEditor">
+              <defs>
+                <marker id="red-arrowhead" viewBox="0 0 10 10" refX="7" refY="5" markerUnits="strokeWidth" markerWidth="5" markerHeight="4" orient="auto">
+                  <path d="M 0 0 L 10 5 L 0 10 z" stroke="none" fill="red" />
+                </marker>
+              </defs>
+
+              <line
+                v-for="value in area.robots"
+                :x1="value.px"
+                :x2="value.arrowX"
+                :y1="value.py"
+                :y2="value.arrowY"
+                stroke="red"
+                marker-end="url(#red-arrowhead)"
+                stroke-width="4"
+                class="line"
+                v-if="value.px"
+              />
+
+            </svg>
+
             <svg-robot
               v-for="value in area.robots"
               v-if="area.robots.length > 0"
@@ -92,6 +114,36 @@ export default {
       objectList: [],
       resultList: [],
       socket: null
+    }
+  },
+  watch: {
+    listAllChildArea: {
+      deep: true,
+      handler(newValue) {
+        for(var area of newValue) {
+          var ref = '#map-' + area.id
+          const width = document.querySelector(ref).offsetWidth
+          const height = document.querySelector(ref).offsetHeight
+          for(var robot of area.robots) {
+            if(robot.point_x !== undefined) {
+              var robotPoint = []
+              const x = Math.round(robot.point_x / robot.map.width * 100 * width / 100 / 100)
+              const y = Math.round(robot.point_y / robot.map.height * 100 * height / 100 / 100)
+              robotPoint.push(x)
+              robotPoint.push(y)
+              robot.px = x
+              robot.py = y
+              const deg = parseInt(robot.deg)
+
+              const point_x = robotPoint[0] + Math.cos(this.convertDeg(deg) * Math.PI / 180) * 30
+              const point_y = robotPoint[1] + Math.sin(this.convertDeg(deg) * Math.PI / 180) * 30
+
+              robot.arrowX = point_x
+              robot.arrowY = point_y
+            }
+          }
+        }
+      }
     }
   },
   computed: {
@@ -244,7 +296,7 @@ export default {
 
       socket.onmessage = function(event) {
         var message = event.data
-        console.log('Data received: ' + message)
+        // console.log('Data received: ' + message)
         if (message[0] === '@') {
           _this.mutUpdateRobotPosition(message)
         }
@@ -254,6 +306,9 @@ export default {
         console.log('Error: ' + error.message)
       }
       return socket
+    },
+    convertDeg(deg) {
+      return -deg
     }
   }
 }
@@ -379,6 +434,14 @@ $bgMap: #FCFCFC;
 
 .map-container {
   margin-top: 30px;
+}
+
+.svgEditor {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
 
 /*.imgMap{*/

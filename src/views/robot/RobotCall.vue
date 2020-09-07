@@ -441,7 +441,6 @@ export default {
           enableInsecureRoomNameWarning: false,
           enableCalendarIntegration: true,
           enableWelcomePage: false,
-          startWithAudioMuted: true
         },
         interfaceConfigOverwrite: {
           // filmStripOnly: true,
