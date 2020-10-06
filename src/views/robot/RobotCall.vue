@@ -947,5 +947,25 @@ hr {
   padding-bottom: 0 !important;
 }
 
+.call-right .call-right__top .avatar-container .avatar-wrap .avatar-inner img{
+  height: unset !important;
+}
+
+.bottom #meetrb2{
+  height: unset !important;
+}
+
+.call-right .call-right__top .bottom {
+  height: unset !important;
+  display: inline-block;
+}
+.call-right .call-right__top .robot-name {
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 4px;
+  margin-left: 5px;
+}
+
 </style>
 
