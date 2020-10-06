@@ -25,7 +25,7 @@
             </div>
           </div>
         </sticky>
-        <md-card class="role-infor">
+        <md-card class="role-info">
           <div class="role-info__inner">
             <div class="role-info__inners">
               <div class="info-title">{{ generateTitleView('create', 'userMedia') }}</div>
@@ -130,6 +130,7 @@ export default {
     }
   },
   mounted() {
+    this.$store.commit('app/CHANGE_APP_TITLE', 'HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN ROBOT')
     this.currentUserId = this.$store.state.auth.id
     this.currentUser = this.$store.state.auth.name
     this.getRobotInfo()
@@ -177,7 +178,7 @@ export default {
                 duration: 2000
               })
               var robotCode = this.robotInfo.code
-              var encoded = b64EncodeUnicode('DownloadMedia_' + robotCode + '_' + res.mediaId)
+              var encoded = b64EncodeUnicode('DownloadMedia_' + robotCode + '_' + res.mediaId + '_' + this.robotInfo.id)
               this.socket.send(encoded)
               setTimeout(() => {
                 window.location.href = '/#/users/robots/media/' + robotId
@@ -286,7 +287,7 @@ export default {
     }
   }
 
-  .role-infor {
+  .role-info {
     margin: 10px 10px 10px;
     background: #fff;
     padding: 20px;
@@ -353,38 +354,38 @@ export default {
   color: #ce5454;
 }
 
-.role-infor /deep/ .v-text-field__slot label.v-label.v-label--active {
+.role-info /deep/ .v-text-field__slot label.v-label.v-label--active {
   left: -8px !important;
   right: auto !important;
 }
 
-.role-infor /deep/ .v-text-field__slot label.v-label {
+.role-info /deep/ .v-text-field__slot label.v-label {
   left: 0px !important;
   right: auto !important;
 }
 
-.role-infor /deep/ .v-text-field--outlined fieldset {
+.role-info /deep/ .v-text-field--outlined fieldset {
   padding-left: 8px;
 }
 
-.role-infor /deep/ .v-input__slot legend {
+.role-info /deep/ .v-input__slot legend {
   text-align: left;
 }
 
-.role-infor /deep/ .v-input__slot {
+.role-info /deep/ .v-input__slot {
   min-height: 40px !important;
 }
 
-.role-infor /deep/ .v-text-field--outlined .v-label {
+.role-info /deep/ .v-text-field--outlined .v-label {
   top: 10px;
 }
 
-.role-infor /deep/ .v-text-field__slot label {
+.role-info /deep/ .v-text-field__slot label {
   font-weight: normal !important;
   font-size: 14px;
 }
 
-.role-infor /deep/ .v-text-field__details {
+.role-info /deep/ .v-text-field__details {
   display: none;
 }
 
@@ -397,13 +398,13 @@ export default {
 }
 
 @media only screen and (max-width: 1400px) {
-  .app-container .role-infor .role-info__inner {
+  .app-container .role-info .role-info__inner {
     flex-basis: 80%;
   }
 }
 
 @media only screen and (max-width: 1024px) {
-  .app-container .role-infor .role-info__inner {
+  .app-container .role-info .role-info__inner {
     flex-basis: 100%;
   }
 }

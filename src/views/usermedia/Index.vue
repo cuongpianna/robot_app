@@ -19,12 +19,12 @@
             class="btn-create-hotel"
             @click="redirectCreate"
           >{{ generateTitleView('create', 'userMedia') }}</el-button>
-          <el-button
-            icon="el-icon-upload"
-            type="primary"
-            class="btn-create-hotel"
-            @click="openUploadMedia"
-          >{{ generateTitleView('uploadMediaToRobots', 'userMedia') }}</el-button>
+<!--          <el-button-->
+<!--            icon="el-icon-upload"-->
+<!--            type="primary"-->
+<!--            class="btn-create-hotel"-->
+<!--            @click="openUploadMedia"-->
+<!--          >{{ generateTitleView('uploadMediaToRobots', 'userMedia') }}</el-button>-->
         </div>
       </div>
     </sticky>
@@ -167,7 +167,6 @@
 </template>
 <script>
 import Pagination from '@/components/Pagination'
-import ElToggleButton from '@/components/ToggleButton'
 import Sticky from '@/components/Sticky'
 import { hasPermissionAction } from '@/help/utils/index'
 import { generateTitleView } from '@/help/utils/i18n'
@@ -177,13 +176,8 @@ import * as ACTIONS from '../../store/constants/usermedia'
 import { ACT_FETCH_ROBOT_PAGING } from '../../store/constants/robot'
 import { ACT_DELETE_MEDIA } from '../../store/constants/robotmedia'
 const LABEL = {
-  name: '',
-  title: 'Media',
   model: 'usermedia/',
-  robotModel: 'robot/',
-  slug: 'usermedia',
-  edit: 'Sửa',
-  create: 'Tạo mới'
+  robotModel: 'robot/'
 }
 
 const defaultUpdateStatus = {
@@ -225,6 +219,7 @@ export default {
     })
   },
   mounted() {
+    this.$store.commit('app/CHANGE_APP_TITLE', 'HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN ROBOT')
     this.socket = this.initSocket()
     this.roleList = this.$store.state.auth.roles
     this.currentUser = this.$store.state.auth.name
@@ -283,7 +278,7 @@ export default {
                 var encoded = b64EncodeUnicode(
                   'DownloadMedia_' + robotCode + '_' + mediaId
                 )
-                var encoded = ''
+                // var encoded = ''
                 this.socket.send(encoded)
               })
             })

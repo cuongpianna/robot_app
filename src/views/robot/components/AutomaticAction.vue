@@ -18,7 +18,7 @@
             <md-icon>medical_services</md-icon>
           </div>
           <div class="right">
-            <div class="value">{{ missionName }}</div>
+            <div class="value" style="min-height: 25px">{{ missionName }}</div>
             <div class="label">Chế độ đang làm việc</div>
           </div>
         </div>
@@ -27,7 +27,7 @@
             <md-icon>view_list</md-icon>
           </div>
           <div class="right">
-            <div class="value">
+            <div class="value" style="min-height: 25px">
               <i v-for="(item, index) in areaRoomNameList" :key="index">
                 <i v-if="index !== 0">-</i>
                 {{ item }}
@@ -49,43 +49,47 @@
           class="btnAction"
           :class="{'active' : robotStatus.workMode
             === '1'}"
-          @click="doShortMission(1)"
+          @click="doShortMission(shortMission.connectAction)"
         >Kết nối
         </button>
       </div>
       <div class="right">
+
         <button
-          v-for="(autoAction,index) in firstAutoRobotList"
-          :key="index"
-          class="btn-long"
-          :class="{'active' : mission === autoAction.code}"
-          @click="setScheduleWithAnAction(autoAction.code)"
+            v-for="(autoAction,index) in firstAutoRobotList"
+            :key="index"
+            class="btn-long"
+            :class="setClassButton(autoAction.code)"
+            @click="setScheduleWithAnAction(autoAction.code)"
         >{{ autoAction.actionName }}
         </button>
       </div>
     </div>
+
+    <!-- down -->
 
     <div class="auto_actions_wrap noMargin">
       <div class="left">
         <button
           class="btnAction"
           :class="{'active' : mission === '2'}"
-          @click="doShortMission(2)"
+          @click="doShortMission(shortMission.resetAction)"
         >Reset
         </button>
       </div>
       <div class="right">
         <button
-          v-for="(autoAction,index) in secondAutoRobotList"
-          :key="index"
-          class="btn-long"
-          :class="{'active' : mission === autoAction.code}"
-          @click="setScheduleWithAnAction(autoAction.code)"
+            v-for="(autoAction,index) in secondAutoRobotList"
+            :key="index"
+            class="btn-long"
+            :class="setClassButton(autoAction.code)"
+            @click="setScheduleWithAnAction(autoAction.code)"
         >{{ autoAction.actionName }}
         </button>
       </div>
     </div>
 
+    <!-- Dialog -->
     <v-dialog v-model="showDialog1" max-width="550">
       <v-card>
         <v-card-title>Danh sách lịch chạy robot</v-card-title>
@@ -103,7 +107,7 @@
               </md-table-cell>
             </md-table-row>
           </md-table>
-          <div v-else class="noCamera">{{ generateTitleView('noCamera', 'camera') }}</div>
+          <div v-else class="noCamera" style="padding: 0 20px">{{ generateTitleView('noCamera', 'camera') }}</div>
         </div>
 
         <md-dialog-actions>
@@ -170,6 +174,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import * as CONTROL_ACTIONS from '../../../store/constants/robotcontrol'
 import * as ROBOTACTIONS from '../../../store/constants/robot'
@@ -183,6 +188,15 @@ const LABEL = {
   robot: 'robot/'
 }
 
+const MISSION_LIST = {
+  chuyenCom: 5,
+  thamBenhNhan: 6,
+  chuyenThuoc: 7,
+  thuRac: 8,
+  veLayDO: 3,
+  veGara: 4
+}
+
 export default {
   name: 'AutomaticAction',
   props: {
@@ -193,10 +207,14 @@ export default {
   },
   data() {
     return {
+      shortMission: {
+        connectAction: 1,
+        resetAction: 2
+      },
+      currentMissionAdd: '',
       mode: 1,
       showDialog: false,
       showDialog1: false,
-      showDialog2: false,
       listQuery: {
         page: 1,
         limit: 1000,
@@ -255,14 +273,18 @@ export default {
     },
     missionName: function() {
       var result = ''
-      if (this.mission === 1) {
-        result = 'Chuyển cơm'
-      } else if (this.mission === 2) {
-        result = 'Chuyển thuốc'
-      } else if (this.mission === 3) {
-        result = 'Thăm bệnh nhân'
-      } else if (this.mission === 4) {
-        result = 'Thu rác'
+      if (this.mission === MISSION_LIST.chuyenCom) {
+        result = this.getMissionName('Chuyển cơm đến phòng ')
+      } else if (this.mission === MISSION_LIST.thamBenhNhan) {
+        result = this.getMissionName('Thăm bệnh nhân tại phòng ')
+      } else if (this.mission === MISSION_LIST.chuyenThuoc) {
+        result = this.getMissionName('Chuyển thuốc đến phòng ')
+      } else if (this.mission === MISSION_LIST.thuRac) {
+        result = this.getMissionName('Thu rác tại phòng ')
+      }else if (this.mission === MISSION_LIST.veLayDO) {
+        result = 'Về lấy đồ'
+      } else if (this.mission === MISSION_LIST.veGara) {
+        result = 'Về gara'
       }
       return result
     }
@@ -277,7 +299,7 @@ export default {
       mutChangeMission:
           LABEL.robotControl + CONTROL_ACTIONS.MUTATION_CHANGE_WORK_MODE,
       mutChangeStatus:
-          LABEL.robotControl + CONTROL_ACTIONS.MUTATION_CHANGE_WORK_STATUS
+          LABEL.robotControl + CONTROL_ACTIONS.MUTATION_CHANGE_WORK_STATUS,
     }),
     ...mapActions({
       actFetchAllRobotActions:
@@ -288,7 +310,6 @@ export default {
       actCreateRobotSchedule:
           LABEL.robotAction + ROBOT_ACTIONS.ACT_INSERT_ROBOT_SCHEDULE
     }),
-    // current_page, name, is_active, limit, showInRobotDashboard, showInManualRobotDashboard
     getRobotActions() {
       this.actFetchAllRobotActions({
         current_page: this.listQuery.page,
@@ -296,26 +317,22 @@ export default {
         is_active: this.listQuery.status,
         limit: this.listQuery.limit,
         isAutomaticAction: true
-      }).then((res) => {
-        this.loading = false
       })
+    },
+    getMissionName(name) {
+      var rooms = Cookies.get('rooms')
+      if(rooms != null && rooms != undefined && rooms != '') {
+        var newRoom = rooms.replaceAll('_', ',')
+        return name + newRoom
+      }else {
+        return name
+      }
     },
     getRobotSchedule() {
-      this.actFetchAllRobotSchedule().then((res) => {
-        this.loading = false
-      })
+      this.actFetchAllRobotSchedule()
     },
-    createSchedule(
-        robotId,
-        robotCode,
-        actionCode,
-        actionType,
-        mapCode,
-        speed,
-        roomList,
-        scheduleTime
-    ) {
-      var formCreate = {
+    createSchedule(robotId, robotCode, actionCode, actionType, mapCode, speed, roomList, scheduleTime) {
+      const formCreate = {
         robotId: robotId,
         robotCode: robotCode,
         actionCode: actionCode,
@@ -325,8 +342,7 @@ export default {
         roomList: roomList,
         scheduleTime: scheduleTime
       }
-      this.actCreateRobotSchedule(formCreate).then((res) => {
-      })
+      this.actCreateRobotSchedule(formCreate)
     },
     getRoomList() {
       let roomList = ''
@@ -338,31 +354,6 @@ export default {
         roomList += roomName
       }
       return roomList
-    },
-    doMission() {
-      const map_id = this.areaNo
-      const speed = 1.5
-      let roomList = ''
-      for (const [index, item] of this.areaRoomList.entries()) {
-        var roomName = item.name.match(/\d+/)[0]
-        if (index + 1 !== this.areaRoomList.length) {
-          roomName = roomName + '_'
-        }
-        roomList += roomName
-      }
-      const value =
-          '@!1#' +
-          this.mission +
-          '#' +
-          map_id +
-          '#' +
-          speed +
-          '#' +
-          roomList +
-          '&'
-      if (this.workStatus === 1) {
-        this.$emit('clicked', value)
-      }
     },
     changeMission(mission) {
       this.mutChangeMission(mission)
@@ -391,6 +382,10 @@ export default {
 
         this.sheduleForm = obj
         this.showDialog = true
+      }else {
+        Cookies.set('rooms', '')
+        const value = `@${this.mode}#${code}#${this.areaNo}#${this.speed}#&_${this.robotObject.code}`
+        this.$emit('clicked', value)
       }
     },
     setSchedule() {
@@ -416,14 +411,6 @@ export default {
         }
       }
 
-      if (roomList === '') {
-        this.$notify.error({
-          title: this.generateTitleView('error', 'message'),
-          message: 'Bạn chưa chọn danh sách phòng',
-          duration: 2000
-        })
-        return
-      }
       if (roomList === '') {
         this.$notify.error({
           title: this.generateTitleView('error', 'message'),
@@ -461,6 +448,8 @@ export default {
             '&' + '_' + this.robotObject.code
         this.$emit('clicked', value)
         this.changeMission(this.sheduleForm.robotActionModel)
+        this.currentMissionAdd = this.sheduleForm.robotActionModel
+        Cookies.set('rooms', roomList)
       } else {
         this.createSchedule(
             this.robotObject.id,
@@ -488,14 +477,20 @@ export default {
     openGetScheduleDialog() {
       this.actFetchAllRobotSchedule().then((res) => {
         this.listRobotSchedule = res.payload.records
-        this.loading = false
         this.showDialog1 = true
       })
     },
     doShortMission(mission) {
-      // ket noi, reset
       const value = `@${this.mode}#${mission}#${this.areaNo}#${this.speed}#&_${this.robotObject.code}`
       this.$emit('clicked', value)
+      Cookies.set('rooms', '')
+    },
+    setClassButton(v) {
+      if(this.mission == v) {
+        return 'superActive'
+      }else if(this.currentMissionAdd == v){
+         return 'active'
+      }
     }
   }
 }
@@ -505,6 +500,10 @@ export default {
 $gray1: #333;
 $blue1: #409eff;
 $red: #eb5757;
+
+.btn-long.superActive{
+  background: $blue1 !important;
+}
 
 .automatic-wrap {
   padding: 15px;

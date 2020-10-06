@@ -1,7 +1,7 @@
 <template>
   <div ref="robotControl" class="app-container">
     <div class="robot-control-container">
-      <robot-information :robot-object="robotObject" />
+      <robot-information :robot-object="robotObject" :area-name="areaName"/>
 
       <v-card ref="robotControls" v-resize="onResize" class="robot-map__container">
         <div id="mapContainer" ref="mapContainer" v-loading="loading" class="robot-map__wrap">
@@ -44,7 +44,6 @@
 
           </svg>
           <svg-robot :left="left" :top="top" :icon="robotObject.icon" :title="robotObject.name" />
-          <!--          <room-point v-for="(item, index) in roomPoints" :id="item.obj.id" :key="index" :left="item.left" :top="item.top" />-->
           <svg-shape
             v-for="(shape, ind) in objectList"
             :key="ind"
@@ -69,7 +68,6 @@ import * as ACTIONS from '../../store/constants/robot'
 import { generateTitleView } from '@/help/utils/i18n'
 import RobotInformation from './components/RobotInformation'
 import RobotActions from './components/RobotActions'
-import RoomPoint from '@/components/RoomPoint'
 import SvgShape from '@/components/SvgShape'
 import SvgRobot from '@/components/SvgRobot'
 import * as CONTROL_ACTIONS from '../../store/constants/robotcontrol'
@@ -77,7 +75,8 @@ import * as CONTROL_ACTIONS from '../../store/constants/robotcontrol'
 const LABEL = {
   name: 'RobotControl',
   model: 'robot/',
-  robotControl: 'robotcontrol/'
+  robotControl: 'robotcontrol/',
+  modelArea: 'area/'
 }
 
 export default {
@@ -89,11 +88,11 @@ export default {
     RobotInformation,
     RobotActions,
     SvgShape,
-    SvgRobot,
-    RoomPoint
+    SvgRobot
   },
   data() {
     return {
+      areaName: '',
       isUploadThumb: false,
       robotObject: {
         map: {}
@@ -110,19 +109,18 @@ export default {
       pointsColor: 'teal',
       robotPoint: [],
       pointsString: '',
-      svgLinePoints: [],
-      pathPoints: [],
       scaleMapX: 0,
       scaleMapY: 0,
-      robotDirection: {},
-      arrowPoint: []
+      arrowPoint: [],
+      realRoomList: []
     }
   },
   computed: {
     ...mapGetters({
       robotStatus: LABEL.robotControl + 'robotStatus',
       areaRoomList: LABEL.robotControl + 'areaRoomList',
-      robotCode: LABEL.robotControl + 'robotCode'
+      robotCode: LABEL.robotControl + 'robotCode',
+      currentRobotCode: LABEL.robotControl + 'currentRobotCode'
     }),
     left: function() {
       return this.robotStatus.point_x * 100 / (this.robotObject.map.width * 100)
@@ -154,68 +152,45 @@ export default {
     },
     robotStatus: {
       deep: true,
-      handler(newValue, oldValue) {
+      handler(newValue) {
+        if(this.currentRobotCode == '') {
+
+        }
         this.robotPoint = []
 
         const mapWidth = this.$refs.mapContainer.clientWidth
         const mapHeight = this.$refs.mapContainer.clientHeight
+
+        var realX4 = this.robotStatus.point_x
+        var realY4 = this.robotStatus.point_y
+
+        var noChange = true
+
+        for(const item of this.realRoomList) {
+          var conditionX = Math.abs(parseFloat(realX4) - parseFloat(item.realX3))
+          var conditionY = Math.abs(parseFloat(realY4) - parseFloat(item.realY3))
+
+          if(conditionX <= (parseFloat(item.deltax) * 100) && conditionY <= (parseFloat(item.deltay) * 100)) {
+            this.mutationChangeCurrentName(item.name)
+            noChange = false
+            break
+          }
+
+        }
+        if(noChange) {
+          this.mutationChangeCurrentName('')
+        }
 
         const x = Math.round(this.robotStatus.point_x / this.robotObject.map.width * 100 * mapWidth / 100 / 100)
         const y = Math.round(this.robotStatus.point_y / this.robotObject.map.height * 100 * mapHeight / 100 / 100)
 
         this.robotPoint.push(x)
         this.robotPoint.push(y)
-        const listSpace = []
-
-        for (const item of this.pathPoints) {
-          const d = parseInt(Math.sqrt(Math.abs((item.x - this.robotPoint[0]) * (item.x - this.robotPoint[0]) - (item.y - this.robotPoint[1]) * (item.y - this.robotPoint[1]))))
-          listSpace.push(d)
-        }
-        const minSpace = Math.min(...listSpace)
-        const indexSpace = listSpace.indexOf(minSpace)
-
-        const deg = parseInt(this.robotStatus.delta_deg)
-
-        var point1 = this.pathPoints[indexSpace]
-        if(this.pathPoints[indexSpace + 1] === undefined) {
-          var point2 = this.pathPoints[indexSpace - 1]
-        }else {
-          point2 = this.pathPoints[indexSpace + 1]
-        }
-
-        // arrow head
-        if(this.robotStatus.missionStatus) {
-          if(deg === 180) {
-            if(point1.y < point2.y) {
-              this.setRobotDirectionByPoint(point1, point2)
-            }else {
-              this.setRobotDirectionByPoint(point2, point1)
-            }
-          }else if(deg === 0) {
-            if(point1.y > point2.y) {
-              this.setRobotDirectionByPoint(point1, point2)
-            }else {
-              this.setRobotDirectionByPoint(point2, point1)
-            }
-          }else if(deg === 90) {
-            if(point1.x < point2.x) {
-              this.setRobotDirectionByPoint(point1, point2)
-            }else {
-              this.setRobotDirectionByPoint(point2, point1)
-            }
-          }else if(deg === 270) {
-            if(point1.x > point2.x) {
-              this.setRobotDirectionByPoint(point1, point2)
-            }else {
-              this.setRobotDirectionByPoint(point2, point1)
-            }
-          }
-        }
 
         // mui ten
-        const degg = parseInt(newValue.delta_deg)
-        const point_x = this.robotPoint[0] + Math.cos(this.convertDeg(degg) * Math.PI / 180) * 30
-        const point_y = this.robotPoint[1] + Math.sin(this.convertDeg(degg) * Math.PI / 180) * 30
+        const deg = parseInt(newValue.delta_deg)
+        const point_x = this.robotPoint[0] + Math.cos(this.convertDeg(deg) * Math.PI / 180) * 30
+        const point_y = this.robotPoint[1] + Math.sin(this.convertDeg(deg) * Math.PI / 180) * 30
 
         this.arrowPoint = []
 
@@ -225,32 +200,17 @@ export default {
     },
     roomPoints: {
       deep: true,
-      handler(newValue, oldValue) {
+      handler() {
         const pointStrings = this.roomPoints.map(function(point) {
           return point.x + ',' + point.y
         }, this)
         const result = pointStrings.join(' ')
         this.pointsString = result
-
-        this.svgLinePoints = []
-
-        if(this.roomPoints.length > 1) {
-          for (const [i, v] of this.roomPoints.entries()) {
-            if(i < (this.roomPoints.length - 1)) {
-              const obj = {
-                x1: v.x,
-                y1: v.y,
-                x2: this.roomPoints[i + 1].x,
-                y2: this.roomPoints[i + 1].y
-              }
-              this.svgLinePoints.push(obj)
-            }
-          }
-        }
       }
     }
   },
   mounted() {
+    this.changeAppTitle('HỆ THỐNG ĐIỀU KHIỂN ROBOT')
     const robotId = this.$router.currentRoute.params.id
     this.getRobot(robotId)
     this.sockets = this.initSocket()
@@ -261,12 +221,15 @@ export default {
   },
   methods: {
     ...mapActions({
-      actGetCurrentRobot: LABEL.model + ACTIONS.ACT_FETCH_ONE_ROBOT
+      actGetCurrentRobot: LABEL.model + ACTIONS.ACT_FETCH_ONE_ROBOT,
+      actGetCurrentArea: LABEL.modelArea + 'actFetchOneArea'
     }),
     ...mapMutations({
       mutUpdateRobotStatus: LABEL.robotControl + CONTROL_ACTIONS.MUTATION_UPDATE_ROBOT_STATUS,
       mutationUpdateRoomAreaList: LABEL.robotControl + CONTROL_ACTIONS.MUTATION_UPDATE_AREA_LIST,
-      mutationChangeRobotCode: LABEL.robotControl + 'mutationChangeRobotCode'
+      mutationChangeRobotCode: LABEL.robotControl + 'mutationChangeRobotCode',
+      mutationChangeCurrentName: LABEL.robotControl + CONTROL_ACTIONS.MUTATION_UPDATE_CURRENT_ROOM_NAME,
+      changeAppTitle: 'app/CHANGE_APP_TITLE'
     }),
     getPointFill() {
       return this.pointsColor
@@ -282,15 +245,24 @@ export default {
         const jsonData = JSON.parse(this.robotObject.map.jsonData)
         this.scaleMapX = mapWidth / jsonData.sizeMap.w
 
-        for(const item of jsonData.objectList) {
-          this.pathPoints.push({
-            x: Math.round(item.points[2].x * this.scaleMapX),
-            y: Math.round(item.points[2].y * this.scaleMapX)
-          })
+        var mapSize = jsonData.sizeMap
+
+        var realMapObject = this.robotObject.map
+
+        for(const item of jsonData.objectList){
+          let point3 = item.points[2]
+          var realPercentX = point3.x / mapSize.w * 100
+          var realPercentY = point3.y /mapSize.h * 100
+          item.realX3 = realPercentX * realMapObject.width / 100 * 100
+          item.realY3 = realPercentY * realMapObject.height / 100 * 100
         }
+        this.realRoomList = jsonData.objectList
+
         this.sizeX = jsonData.sizeMap.w
         this.sizeY = jsonData.sizeMap.h
         this.mutationChangeRobotCode(this.robotObject.code)
+
+        this.getArea(this.robotObject.map.parentId)
       })
     },
     initMap() {
@@ -346,18 +318,6 @@ export default {
               newPoints.push(newPoint)
             }
             item.newPoints = newPoints
-          } else {
-            const points = item.points[0]
-
-            const left = points.x / sizeMap.w * 100
-            const top = points.y / sizeMap.h * 100
-
-            const position = {
-              left: left,
-              top: top
-            }
-
-            item.position = position
           }
         }
         this.objectList = objectList
@@ -398,9 +358,9 @@ export default {
         }
         console.log('Code: ' + event.code + '. Reason: ' + event.reason)
 
-        setTimeout(function() {
-          _this.initSocket()
-        }, 1000)
+        // setTimeout(function() {
+        //   _this.initSocket()
+        // }, 1000)
       }
 
       socket.onmessage = function(event) {
@@ -422,18 +382,15 @@ export default {
     selectRoom(area) {
       this.mutationUpdateRoomAreaList(area)
     },
-    setRobotDirectionByPoint(p1, p2) {
-      this.robotDirection = {
-        x1: p1.x,
-        y1: p1.y,
-        x2: p2.x,
-        y2: p2.y
-      }
-    },
     convertDeg(deg) {
       return -deg
     },
-    generateTitleView
+    generateTitleView,
+    getArea(id) {
+      this.actGetCurrentArea(id).then(res => {
+        this.areaName = res.payload.records.name
+      })
+    },
   }
 }
 </script>

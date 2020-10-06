@@ -124,12 +124,7 @@ import ElToggleButton from '@/components/ToggleButton'
 import { FETCH_ALL_MODULE } from '../../store/constants/module'
 
 const LABEL = {
-  name: '',
-  title: 'MODULE',
-  model: 'module/',
-  slug: 'module',
-  edit: 'Sửa',
-  create: 'Tạo mới'
+  model: 'module/'
 }
 export default {
   name: 'Module',
@@ -176,6 +171,7 @@ export default {
     }
   },
   mounted() {
+    this.$store.commit('app/CHANGE_APP_TITLE', 'HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN ROBOT')
     this.roleList = this.$store.state.auth.roles
     this.getModule()
   },
@@ -270,14 +266,6 @@ export default {
       margin-left: 10px;
       font-weight: bold;
       color: rgba(33, 33, 33, 0.85);
-    }
-
-    .btn-export-excel {
-      padding: 5px 10px;
-    }
-
-    .btn-create-hotel {
-      padding: 5px 10px;
     }
 
   }
@@ -392,98 +380,6 @@ export default {
       background: #123d8b;
     }
 
-  }
-
-  .permission-popup {
-    position: fixed;
-    background: #fff;
-    width: 0;
-    height: 100vh;
-    top: 0;
-    right: 0;
-    transition: all 0.3s ease-in-out;
-    border: 1px solid #d9d9d9;
-    border-radius: 4px 4px 0 0;
-    z-index: 999;
-
-    &.active {
-      width: 80%;
-
-      .header-popup {
-        i {
-          left: -22px;
-        }
-
-      }
-    }
-
-    .header-popup {
-      padding: 15px;
-      border-bottom: 1px solid #d9d9d9;
-      font-size: 24px;
-      display: flex;
-      justify-content: space-between;
-
-      i {
-        position: absolute;
-        left: 0;
-        top: 38px;
-        background: #fff;
-        font-size: 20px;
-        border: 1px solid #d9d9d9;
-        border-radius: 4px 0 0 4px;
-        cursor: pointer;
-        z-index: 1000;
-      }
-
-      .btn-save-permission {
-        padding: 8px 20px;
-        background: #123d8b;
-        color: #fff;
-      }
-
-    }
-
-    .permission-list {
-      margin-top: 15px;
-      padding: 5px;
-      display: flex;
-      justify-content: space-between;
-
-      .item {
-        width: 33%;
-
-        .item-header {
-          padding: 10px;
-          border: 1px solid #d9d9d9;
-          border-radius: 4px 4px 0 0;
-          display: flex;
-          justify-content: space-between;
-          background: #f4f5f4;
-        }
-
-        .item-body {
-          padding: 10px;
-          border-left: 1px solid #d9d9d9;
-          border-right: 1px solid #d9d9d9;
-          border-bottom: 1px solid #d9d9d9;
-
-          li {
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #d9d9d9;
-            display: flex;
-            justify-content: space-between;
-
-            &:last-child {
-              border-bottom: none;
-              margin-bottom: 0;
-            }
-
-          }
-        }
-      }
-    }
   }
 }
 </style>

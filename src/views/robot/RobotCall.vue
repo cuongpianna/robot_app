@@ -3,19 +3,20 @@
     <div class="call-wrap">
       <div class="call-left" style="overflow:hidden;">
         <div class="video-call-wrap">
-          <span v-if="mediaSelected == null" id="meetrb1" />
+          <span v-if="mediaSelected == null" id="meetrb1"/>
           <div v-else style="height: 100%">
             <video v-if="mediaSelected.fileType == 'Video'" controls autoplay class>
               <source :src="mediaSelected.serverMediaPath" type="video/mp4">
             </video>
 
-            <embed style="height: 100%;" v-else-if="mediaSelected.fileType == 'Pdf'" :src="mediaSelected.serverMediaPath" width="100%" height="100%" />
+            <embed style="height: 100%;" v-else-if="mediaSelected.fileType == 'Pdf'"
+                   :src="mediaSelected.serverMediaPath" width="100%" height="100%"/>
 
             <img
-              v-else
-              :src="mediaSelected.serverMediaPath"
-              :alt="mediaSelected.fileName"
-              class="media-item"
+                v-else
+                :src="mediaSelected.serverMediaPath"
+                :alt="mediaSelected.fileName"
+                class="media-item"
             >
           </div>
         </div>
@@ -24,32 +25,32 @@
             <swiper :options="swiperOption">
               <swiper-slide class="media_inner__left">
                 <img
-                  :src="require('@/assets/doctor2.png')"
-                  alt
-                  class="mainImg"
-                  @click="openVideoCall"
+                    :src="require('@/assets/doctor2.png')"
+                    alt
+                    class="mainImg"
+                    @click="openVideoCall"
                 >
               </swiper-slide>
               <swiper-slide v-for="(item, index) in listRobotMedia" :key="index" class="media-item">
                 <img
-                  v-if="item.fileType == 'Video'"
-                  :src="require('@/assets/videothumb.jpg')"
-                  class="media-item__inner"
-                  @click="selectItem(item)"
+                    v-if="item.fileType == 'Video'"
+                    :src="require('@/assets/videothumb.jpg')"
+                    class="media-item__inner"
+                    @click="selectItem(item)"
                 >
                 <div
-                  v-if="item.fileType == 'Pdf'"
-                  class="pdfItem"
+                    v-if="item.fileType == 'Pdf'"
+                    class="pdfItem"
                 >
-                  <font-awesome-icon icon="file-pdf" class="pdfIcon" />
+                  <font-awesome-icon icon="file-pdf" class="pdfIcon"/>
                   {{ item.fileName }}
                 </div>
                 <img
-                  v-else
-                  :src="item.serverMediaPath"
-                  :alt="item.fileName"
-                  class="media-item__inner"
-                  @click="selectItem(item)"
+                    v-else
+                    :src="item.serverMediaPath"
+                    :alt="item.fileName"
+                    class="media-item__inner"
+                    @click="selectItem(item)"
                 >
                 <div class="overlay" :class="item.fileType" @click="selectItem(item)">{{ item.fileName }}</div>
               </swiper-slide>
@@ -59,115 +60,117 @@
       </div>
       <div class="call-right">
         <div class="call-right__top">
-          <div class="avatar-container">
-            <div class="avatar-wrap">
-              <div class="avatar-inner">
-                <img v-if="robotInfo.thumb" :src="folderUpload + robotInfo.thumb" alt>
+          <div class="top">
+            <div class="avatar-container">
+              <div class="avatar-wrap">
+                <div class="avatar-inner">
+                  <img v-if="robotInfo.thumb" :src="folderUpload + robotInfo.thumb" alt>
+                </div>
               </div>
-            </div>
-            <div class="robot-name__wrap">
-              <div class="robot-name">
-                <span class="label">{{ generateTitleView('robotName', 'robot') }} :</span> {{
-                  robotInfo.name
-                }}
+              <div class="robot-name__wrap">
+                <div class="robot-name">
+                  <span class="label" style="color: black">Thông tin robot:</span> {{ robotInfo.code }} -
+                  {{ robotInfo.name }} ( {{ robotInfo.robotVersion.name }} )
+                </div>
+
+                <div class="robot-name">
+                  <span class="label" style="color: black">{{ generateTitleView('workAt', 'robot') }}:</span>
+                  {{ areaName }} - {{ robotInfo.map.name }}
+                </div>
+
+                <hr>
+
+                <div class="robot-name">
+                  {{ generateTitleView('status', 'robot') }}:
+                  <span v-if="robotStatus.point_x != undefined" style="color: green">
+                    {{ generateTitleView('working', 'robot') }}
+                  </span>
+                  <span v-else style="color: red"> {{ generateTitleView('notWorking', 'robot') }} </span>
+                </div>
+
               </div>
 
-              <div class="robot-code">
-                <span class="label">{{ generateTitleView('code', 'robot') }} :</span> {{ robotInfo.code }}
-              </div>
             </div>
 
+            <div class="robot_info__under">
+              <div class="info_under__inner">
+                <div class="robot-rows__wrap">
+                  <div class="robot-rows__left">
+                    <div class="robot-rows">
+                      <font-awesome-icon class="infoIcon" icon="map-marker-alt"/>
+                      Vị trí <span v-show="robotStatus.point_x != undefined">[{{
+                        robotStatus.point_x
+                      }}, {{ robotStatus.point_y }}]</span>
+                    </div>
+
+                    <div class="robot-rows">
+                      <font-awesome-icon class="infoIcon" icon="battery-half"/>
+                      Pin ({{ robotStatus.pin }}%)
+                    </div>
+
+                    <div class="robot-rows">
+                      <font-awesome-icon class="infoIcon" icon="wifi" :color="wifiColor"/>
+                      <span v-if="setting.isOnline">Wifi</span> <span v-else>Wifi-LAN</span>
+                    </div>
+
+                    <div class="robot-rows" v-show="workType">
+                      <font-awesome-icon class="infoIcon" icon="sign-in-alt"/>
+                      {{ workType }}
+                    </div>
+                  </div>
+
+                  <div class="robot-rows__right">
+                    <div class="robot-rows" style="min-height: 20px">
+                      <span v-show="currentRoomName !== ''">{{ currentRoomName }}</span>
+                    </div>
+                    <div class="robot-rows">
+                      <font-awesome-icon class="infoIcon" icon="certificate" :color="colorBarrier"/>
+                      Vật cản
+                    </div>
+                    <div class="robot-rows">
+                      <font-awesome-icon class="infoIcon" icon="pause" :color="colorPause"/>
+                      Dừng khẩn cấp
+                    </div>
+                    <div class="robot-rows" v-show="workMode">
+                      <font-awesome-icon class="infoIcon" icon="play" color="green"/>
+                      {{ workMode }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="robot-actions">
-            <el-tooltip
-              class="item"
-              effect="dark"
-              :content="generateTitleView('mediaManagement' ,'robot')"
-              placement="top"
-            >
-              <button
-                class="action-button"
-                :title="generateTitleView('mediaManagement', 'robot')"
-                @click="redirectToMedia"
-              >
-                <font-awesome-icon icon="file-alt" color="#828282" />
-              </button>
-            </el-tooltip>
-
-            <el-tooltip
-              class="item"
-              effect="dark"
-              :content="generateTitleView('robotControl' ,'robot')"
-              placement="top"
-            >
-              <button class="action-button camera-button" @click="redirectRobotControl">
-                <font-awesome-icon icon="arrows-alt" color="#ffffff" />
-              </button>
-            </el-tooltip>
-          </div>
-          <div class="robot-information">
-
-            <div class="robot-status">
-              <div class="robot-status__left">
-                <div class="value">{{ robotInfo.map.name }}</div>
-                <div class="label">{{ generateTitleView('workAt', 'robot') }}</div>
-              </div>
-
-              <div class="robot-status__right">
-                <div class="value">{{ generateTitleView('working', 'robot') }}</div>
-                <div class="label">{{ generateTitleView('status', 'robot') }}</div>
-              </div>
-            </div>
+          <div class="bottom">
+            <div v-show="setting.isTwoCamera" id="meetrb2" class="robot-camera"/>
           </div>
         </div>
 
         <div class="call-right__bottom">
-          <div v-show="setting.isTwoCamera" id="meetrb2" class="robot-camera" />
-          <div v-show="!setting.isTwoCamera" class="robot_info__under">
-            <div class="info_under__inner">
-              <div class="robot-rows robot-rows_first">
-                <el-tooltip :content="generateTitleView('version', 'robot')" effect="dark" placement="top">
-                  <span><font-awesome-icon icon="code-branch" style="margin-right: 5px" />
-                    Phiên bản: {{ robotInfo.robotVersion.name }}</span>
-                </el-tooltip>
-              </div>
-              <div class="robot-rows__wrap">
-                <div class="robot-rows__left">
-                  <div class="robot-rows">
-                    <font-awesome-icon class="infoIcon" icon="map-marker-alt" />
-                    Vị trí [{{ robotStatus.point_x }}, {{ robotStatus.point_y }}]
-                  </div>
-                  <div class="robot-rows">
-                    <font-awesome-icon class="infoIcon" icon="sign-in-alt" />
-                    {{ workType }}
-                  </div>
-                  <div class="robot-rows">
-                    <font-awesome-icon class="infoIcon" icon="battery-half" />
-                    Pin ({{ robotStatus.pin }}%)
-                  </div>
-
-                  <div class="robot-rows">
-                    <font-awesome-icon class="infoIcon" icon="wifi" :color="wifiColor" />
-                    Wifi
-                  </div>
-                </div>
-
-                <div class="robot-rows__right">
-                  <div class="robot-rows">
-                    <font-awesome-icon class="infoIcon" icon="certificate" :color="colorBarrier" />
-                    Vật cản
-                  </div>
-                  <div class="robot-rows">
-                    <font-awesome-icon class="infoIcon" icon="play" color="green" />
-                    {{ workMode }}
-                  </div>
-                  <div class="robot-rows">
-                    <font-awesome-icon class="infoIcon" icon="pause" :color="colorPause" />
-                    Dừng khẩn cấp
-                  </div>
-                </div>
-              </div>
+          <div class="notification">
+            <div class="left">
+              <v-textarea
+                  solo
+                  rows="2"
+              ></v-textarea>
             </div>
+            <div class="right">
+              <button class="btn-notification">Thông báo</button>
+            </div>
+          </div>
+          <div class="robot-actions">
+            <button
+                class="action-button"
+                :title="generateTitleView('mediaManagement', 'robot')"
+                @click="redirectToMedia"
+            >
+              {{ generateTitleView('mediaManagement', 'robot') }}
+              <font-awesome-icon icon="file-alt" color="#828282"/>
+            </button>
+
+            <button class="action-button camera-button" @click="redirectRobotControl">
+              {{ generateTitleView('robotControl', 'robot') }}
+              <font-awesome-icon icon="arrows-alt" color="#ffffff"/>
+            </button>
           </div>
         </div>
       </div>
@@ -181,7 +184,7 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 import { generateTitleView } from '@/help/utils/i18n'
 import * as ROBOT_ACTIONS from '../../store/constants/robot'
 import * as ROBOTMEDIA_ACTIONS from '../../store/constants/robotmedia'
-import { hasPermissionAction } from '@/help/utils/index'
+import { hasPermissionAction } from '@/help/utils'
 import { b64EncodeUnicode } from '../../help/utils/stringHelper'
 import * as CONTROL_ACTIONS from '../../store/constants/robotcontrol'
 
@@ -190,7 +193,17 @@ const LABEL = {
   modelMediaRobot: 'robotmedia/',
   modelAuth: 'auth/',
   modelRobotAction: 'robotaction/',
-  robotControl: 'robotcontrol/'
+  robotControl: 'robotcontrol/',
+  modelArea: 'area/'
+}
+
+const MISSION_LIST = {
+  chuyenCom: 5,
+  thamBenhNhan: 6,
+  chuyenThuoc: 7,
+  thuRac: 8,
+  veLayDO: 3,
+  veGara: 4
 }
 
 export default {
@@ -201,13 +214,15 @@ export default {
   },
   data() {
     return {
+      areaName: '',
+      realRoomList: [],
       VUE_APP_JITSI_DOMAIN: '',
       currentPage: 0,
       pageCount: 0,
       isLoading: false,
       listQuery: {
         page: 1,
-        limit: 20,
+        limit: 100,
         name: '',
         status: null,
         socket: null,
@@ -265,19 +280,24 @@ export default {
     ...mapGetters({
       listRobotMedia: LABEL.modelRobot + 'listRobotMedia',
       setting: LABEL.modelAuth + 'setting',
-      robotStatus: LABEL.robotControl + 'robotStatus'
+      robotStatus: LABEL.robotControl + 'robotStatus',
+      currentRoomName: LABEL.robotControl + 'currentRoomName'
     }),
     workType: function() {
       var result = ''
       const workType = parseInt(this.robotStatus.workType)
-      if (workType === 1) {
-        result = 'Đưa cơm'
-      } else if (workType === 2) {
-        result = 'Đưa thuốc'
-      } else if (workType === 3) {
-        result = 'Thăm khám'
-      } else if (workType === 4) {
+      if (workType === MISSION_LIST.chuyenCom) {
+        result = 'Chuyển cơm'
+      } else if (workType === MISSION_LIST.thamBenhNhan) {
+        result = 'Thăm bệnh nhân'
+      } else if (workType === MISSION_LIST.chuyenThuoc) {
+        result = 'Chuyển thuốc'
+      } else if (workType === MISSION_LIST.thuRac) {
         result = 'Thu rác'
+      } else if (workType === MISSION_LIST.veLayDO) {
+        result = 'Về lấy đồ'
+      } else if (workType === MISSION_LIST.veGara) {
+        result = 'Về gara'
       }
       return result
     },
@@ -314,20 +334,51 @@ export default {
       return result
     }
   },
+  watch: {
+    robotStatus: {
+      deep: true,
+      handler() {
+
+        var realX4 = this.robotStatus.point_x
+        var realY4 = this.robotStatus.point_y
+
+        var noChange = true
+
+        for (const item of this.realRoomList) {
+          var conditionX = Math.abs(parseFloat(realX4) - parseFloat(item.realX3))
+          var conditionY = Math.abs(parseFloat(realY4) - parseFloat(item.realY3))
+          if (conditionX <= (parseFloat(item.deltax) * 100) && conditionY <= (parseFloat(item.deltay) * 100)) {
+            this.mutationChangeCurrentName(item.name)
+            noChange = false
+            break
+          }
+
+        }
+        if (noChange) {
+          this.mutationChangeCurrentName('')
+        }
+      }
+    }
+  },
   mounted() {
     this.robotId = this.$router.currentRoute.params.id
     this.socket = this.initSocket()
     this.getRobotMedia()
     this.getRobotInfo()
+    this.changeAppTitle('HỆ THỐNG GIAO TIẾP QUA ROBOT')
   },
   methods: {
     ...mapMutations({
-      mutUpdateRobotStatus: LABEL.robotControl + CONTROL_ACTIONS.MUTATION_UPDATE_ROBOT_STATUS
+      mutUpdateRobotStatus: LABEL.robotControl + CONTROL_ACTIONS.MUTATION_UPDATE_ROBOT_STATUS,
+      mutationChangeRobotCode: LABEL.robotControl + 'mutationChangeRobotCode',
+      mutationChangeCurrentName: LABEL.robotControl + CONTROL_ACTIONS.MUTATION_UPDATE_CURRENT_ROOM_NAME,
+      changeAppTitle: 'app/CHANGE_APP_TITLE'
     }),
     ...mapActions({
       actGetRobotMedia: LABEL.modelRobot + ROBOT_ACTIONS.ACT_GET_ROBOT_MEDIA,
       actGetRobotInfo: LABEL.modelRobot + ROBOT_ACTIONS.ACT_FETCH_ONE_ROBOT,
-      actExportMedia: LABEL.modelMediaRobot + ROBOTMEDIA_ACTIONS.ACT_EXPORT_MEDIA
+      actExportMedia: LABEL.modelMediaRobot + ROBOTMEDIA_ACTIONS.ACT_EXPORT_MEDIA,
+      actGetCurrentArea: LABEL.modelArea + 'actFetchOneArea'
     }),
     getRobotMedia() {
       this.actGetRobotMedia({
@@ -365,15 +416,38 @@ export default {
       )
       this.socket.send(encoded)
     },
-
+    getArea(id) {
+      this.actGetCurrentArea(id).then(res => {
+        this.areaName = res.payload.records.name
+      })
+    },
     getRobotInfo() {
       this.actGetRobotInfo(this.robotId).then(res => {
         this.robotInfo = res.payload.records
-        if(this.setting.isOnline) {
+
+        this.getArea(this.robotInfo.map.parentId)
+
+        if (this.setting.isOnline) {
           this.VUE_APP_JITSI_DOMAIN = this.robotInfo.videoCallOnlineUrl
-        }else {
+        } else {
           this.VUE_APP_JITSI_DOMAIN = this.robotInfo.videoCallUrl
         }
+
+        this.robotObject = JSON.parse(JSON.stringify(this.robotInfo))
+        const jsonData = JSON.parse(this.robotObject.map.jsonData)
+
+        var mapSize = jsonData.sizeMap
+
+        var realMapObject = this.robotObject.map
+
+        for (const item of jsonData.objectList) {
+          let point3 = item.points[2]
+          var realPercentX = point3.x / mapSize.w * 100
+          var realPercentY = point3.y / mapSize.h * 100
+          item.realX3 = realPercentX * realMapObject.width / 100 * 100
+          item.realY3 = realPercentY * realMapObject.height / 100 * 100
+        }
+        this.realRoomList = jsonData.objectList
 
         var _seft = this
         setTimeout(function() {
@@ -440,7 +514,7 @@ export default {
         configOverwrite: {
           enableInsecureRoomNameWarning: false,
           enableCalendarIntegration: true,
-          enableWelcomePage: false,
+          enableWelcomePage: false
         },
         interfaceConfigOverwrite: {
           // filmStripOnly: true,
@@ -521,11 +595,9 @@ export default {
 
         if (message[0] === '@') {
           var msg_dump = message.split('#')
-          if (msg_dump[msg_dump.length - 1] === '127.0.0.1:7000' && _this.robotInfo.code === 'R32125') {
-            _this.mutUpdateRobotStatus(message)
-          }
 
-          if (msg_dump[msg_dump.length - 1] === '127.0.0.1:5000' && _this.robotInfo.code === 'R32124') {
+          const robotCode = msg_dump[msg_dump.length - 1]
+          if (_this.robotInfo.code === robotCode) {
             _this.mutUpdateRobotStatus(message)
           }
         }
@@ -671,55 +743,29 @@ $bgMap: #fcfcfc;
 }
 
 .call-right {
-  display: flex;
-  flex-direction: column;
-
   .call-right__top {
     padding: 15px;
     border-bottom: 1px solid #f2f2f2;
 
     .robot-name {
-      text-align: center;
       color: #333333;
-      font-weight: 500;
-      font-size: 18px;
-      margin-top: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      margin-top: 7px;
     }
 
     .robot-code {
       color: #828282;
       font-size: 14px;
-      text-align: center;
       margin-top: 8px;
     }
 
-    .robot-actions {
-      text-align: center;
-      margin-top: 12px;
-
-      .action-button {
-        margin-right: 5px;
-        width: 35px;
-        height: 35px;
-        line-height: 35px;
-        border: 1px solid #929292;
-        border-radius: 4px;
-      }
-
-      .camera-button.action-button {
-        background: #eb5757;
-        border: none;
-      }
-
-    }
 
     .avatar-container {
       display: flex;
-      justify-content: center;
-      flex-direction: column;
+      justify-content: space-around;
 
       .avatar-wrap {
-        margin: 0 auto;
 
         .avatar-inner {
           padding: 6px;
@@ -728,8 +774,8 @@ $bgMap: #fcfcfc;
 
           img {
             border-radius: 100%;
-            width: 120px;
-            height: 120px;
+            width: 90px;
+            height: 90px;
           }
 
         }
@@ -769,73 +815,18 @@ $bgMap: #fcfcfc;
     }
   }
 
-  .call-right__bottom {
-    background: #fff;
+  .call-right__top {
+    justify-content: space-between;
+    border-bottom: 0 !important;
+    height: calc(100% - 155px);
+    display: flex;
+    flex-direction: column;
 
-    .robot-camera {
-      flex-basis: 50%;
-      background: #e0e0e0;
-      width: 100%;
-    }
+    .bottom {
+      height: 350px;
 
-    .robot-control {
-      padding: 20px 0;
-      flex-basis: 45%;
-      display: flex;
-      align-items: center;
-
-      .control-right {
-        flex-basis: 50%;
-
-        .btn-control {
-          display: flex;
-          background: #dbdbdb;
-          color: #fff;
-          border-radius: 4px;
-          font-size: 14px;
-          width: 135px;
-          height: 40px;
-          align-items: center;
-          justify-content: center;
-          margin-right: auto;
-          margin-left: auto;
-        }
-
-        .btn-control.btn-primary {
-          background: #2f80ed;
-          margin-bottom: 25px;
-        }
-
-      }
-
-      .control-left {
-        flex-basis: 50%;
-        justify-content: center;
-
-        .control-wrap {
-          width: 130px;
-          height: 130px;
-          border-radius: 100%;
-          background: #2f80ed;
-          padding: 9px;
-          margin: auto;
-
-          .control-row {
-            display: flex;
-            height: 37px;
-
-            .control-col {
-              width: 40px;
-              text-align: center;
-              line-height: 40px;
-            }
-
-            .control-col.button {
-              cursor: pointer;
-            }
-
-          }
-        }
+      #meetrb2 {
+        height: 100%;
       }
     }
   }
@@ -871,105 +862,6 @@ $bgMap: #fcfcfc;
 
 }
 
-.call-right__bottom {
-  flex-basis: 50%;
-}
-
-.avatar-wrap {
-  display: none;
-}
-
-@media (min-width: 1600px) {
-  .avatar-wrap {
-    display: block;
-  }
-}
-
-@media only screen and (max-height: 820px) {
-  .call-right__top {
-    padding-top: 15px !important;
-  }
-
-  .call-right
-  .call-right__top
-  .avatar-container
-  .avatar-wrap
-  .avatar-inner
-  img {
-    width: 90px !important;
-    height: 90px !important;
-  }
-}
-
-@media only screen and (max-height: 720px) {
-  .call-right__top {
-    padding-top: 15px !important;
-  }
-
-  .call-right
-  .call-right__top
-  .avatar-container
-  .avatar-wrap
-  .avatar-inner
-  img {
-    width: 70px !important;
-    height: 70px !important;
-  }
-
-  .call-right .call-right__bottom .robot-control {
-    padding: 10px !important;
-  }
-
-  .call-right .call-right__bottom .robot-control {
-    padding: 10px 20px !important;
-  }
-
-  .robot-name .label {
-    display: none;
-  }
-
-  .robot-code .label {
-    display: none;
-  }
-}
-
-@media only screen and (max-height: 640px) {
-  .robot-name__wrap {
-    display: flex;
-    justify-content: center;
-
-    span .label {
-      display: none;
-    }
-
-    .robot-name {
-      margin-top: 5px !important;
-      margin-right: 10px;
-    }
-
-    .robot-code {
-      margin-top: 5px !important;
-    }
-
-  }
-
-  .call-right .call-right__top .robot-information .robot-actions {
-    margin-top: 7px;
-  }
-
-  .call-right .call-right__top .robot-information .robot-status {
-    margin-top: 15px;
-  }
-
-  .call-right .call-right__top {
-    padding: 10px;
-  }
-
-}
-
-#meetrb2 {
-  height: calc(100% - 90px);
-}
 
 .circular-label.insecure {
   display: none;
@@ -979,8 +871,81 @@ $bgMap: #fcfcfc;
   min-height: 100px;
 }
 
-.pdfWrap{
+.pdfWrap {
   height: 100% !important;
 }
+
+hr {
+  margin-top: 10px;
+  border: 1px solid #2f80ed;
+  width: 80px
+}
+
+.call-right__bottom {
+  padding: 5px 15px;
+
+  .notification {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+
+    .right {
+      width: 120px;
+
+      button {
+        transition: all ease .5s;
+        background: $blue1;
+        border-radius: 4px;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        width: 100%;
+        height: 30px;
+      }
+    }
+
+    .left {
+      margin-right: 10px;
+      width: calc(100% - 150px);
+    }
+
+    .left /deep/ .v-text-field__details {
+      display: none;
+    }
+  }
+}
+
+.robot-actions {
+  text-align: center;
+  margin-top: 10px;
+
+  .item {
+    cursor: pointer;
+  }
+
+  .action-button {
+    padding: 0 8px;
+    margin-right: 5px;
+    height: 35px;
+    line-height: 35px;
+    border: 1px solid #929292;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .camera-button.action-button {
+    background: #eb5757;
+    border: none;
+    color: #fff;
+  }
+
+}
+
+.call-right__top {
+  padding-bottom: 0 !important;
+}
+
 </style>
 

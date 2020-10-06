@@ -53,10 +53,7 @@ const actions = {
     },
 
     [ACTIONS.ACT_DELETE_MEDIA]({ commit, state }, id) {
-
-        debugger;
         return new Promise((resolve, reject) => {
-            debugger;
             RobotMediaService.delete(id)
                 .then(res => {
                     if (res && res.isSuccess) {
@@ -72,7 +69,6 @@ const actions = {
         })
     },
     [ACTIONS.ACT_INSERT_MEDIA]({ commit, state }, data) {
-        debugger;
         return new Promise((resolve, reject) => {
             RobotMediaService.upload(data).then(res => {
                 if(res) {
@@ -84,7 +80,6 @@ const actions = {
         })
     },
     [ACTIONS.ACT_EXPORT_MEDIA]({ commit, state }, data) {
-        debugger;
         return new Promise((resolve, reject) => {
             RobotMediaService.export(data).then(res => {
                 if(res) {

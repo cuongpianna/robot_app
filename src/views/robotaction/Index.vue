@@ -151,13 +151,8 @@ import * as Permissions from '../../contants/permissions'
 import * as ACTIONS from '../../store/constants/robotaction'
 
 const LABEL = {
-  name: '',
-  title: 'Lệnh điều khiển',
   model: 'robotaction/',
-  robotModel: 'robot/',
-  slug: 'robotaction',
-  edit: 'Sửa',
-  create: 'Tạo mới'
+  robotModel: 'robot/'
 }
 
 const defaultUpdateStatus = {
@@ -194,6 +189,7 @@ export default {
     })
   },
   mounted() {
+    this.$store.commit('app/CHANGE_APP_TITLE', 'HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN ROBOT')
     this.roleList = this.$store.state.auth.roles
     this.currentUser = this.$store.state.auth.name
     this.currentUserId = this.$store.state.auth.id
@@ -305,10 +301,6 @@ export default {
       color: rgba(33, 33, 33, 0.85);
     }
 
-    .btn-export-excel {
-      padding: 5px 10px;
-    }
-
     .btn-create-hotel {
       padding: 5px 10px;
     }
@@ -316,63 +308,6 @@ export default {
 
   .filter {
     margin: 10px 10px 10px;
-
-    .filter-content {
-      padding: 10px;
-      width: 100%;
-      background: #fff;
-      display: flex;
-      justify-content: space-between;
-
-      .user-form {
-        display: flex;
-
-        /deep/ .el-form-item__label {
-          line-height: 20px;
-          font-weight: normal;
-        }
-
-        .item-account {
-          margin-bottom: 0;
-          width: 300px;
-
-          /deep/ .el-input__inner {
-            padding: 5px 10px;
-            height: 32px;
-            margin-bottom: 0;
-          }
-        }
-
-        .item-status {
-          margin-left: 10px;
-          margin-bottom: 0;
-
-          /deep/ .el-input__inner {
-            padding: 5px 10px;
-            height: 32px;
-            margin-bottom: 0;
-          }
-        }
-      }
-
-      .item-action {
-        margin-top: 33px;
-        margin-left: 10px;
-        margin-right: 0;
-      }
-
-      .btn-reset {
-        background: #8e97a9;
-        color: #fff;
-        padding: 8px 15px;
-      }
-
-      .btn-search {
-        background: #123d8b;
-        color: #fff;
-        padding: 8px 15px;
-      }
-    }
   }
 
   .table-users {
@@ -429,30 +364,6 @@ export default {
   .icon-reset {
     &:hover {
       cursor: pointer;
-    }
-  }
-
-  .user-diaglog /deep/ {
-    .el-dialog__header {
-      font-weight: bold;
-      font-size: 20px;
-    }
-
-    .el-dialog__body {
-      padding: 0 20px;
-    }
-
-    .el-dialog__footer {
-      button {
-        background: #123d8b;
-        color: #fff;
-        padding: 8px 20px;
-        border: none;
-      }
-
-      button.el-button--info {
-        background: #8e97a9;
-      }
     }
   }
 }

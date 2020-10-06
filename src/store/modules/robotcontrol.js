@@ -6,7 +6,9 @@ const state = {
     mission: 2,
     workStatus: 1,
     robotCode: '',
-    isAutomatic: true
+    isAutomatic: true,
+    currentRoomName: '',
+    currentRobotCode: ''
 }
 
 const getters = {
@@ -15,13 +17,16 @@ const getters = {
     mission: state => state.mission,
     workStatus: state => state.workStatus,
     robotCode: state => state.robotCode,
-    isAutomatic: state => state.isAutomatic
+    isAutomatic: state => state.isAutomatic,
+    currentRoomName: state => state.currentRoomName,
+    currentRobotCode: state => state.currentRobotCode
 }
 
 const mutations = {
     [ACTIONS.MUTATION_UPDATE_ROBOT_STATUS](state, payload) {
         const s2 = payload.substr(1)
         const statusList = s2.split('#')
+        state.currentRobotCode = statusList[statusList.length - 1]
         const status = {}
         status.workMode = statusList[2]
         status.networkStatus = statusList[3]
@@ -34,9 +39,9 @@ const mutations = {
         status.pin = statusList[10]
         status.workType = statusList[11]
         state.robotStatus = status
-        if (state.workMode == 0) {
+        if (status.workMode == 0) {
             state.isAutomatic = false
-        } else if (state.workMode == 1) {
+        } else if (status.workMode == 1) {
             state.isAutomatic = true
         }
 
@@ -68,8 +73,14 @@ const mutations = {
     [ACTIONS.MUTATION_CHANGE_AUTOMATIC](state) {
         state.isAutomatic = !state.isAutomatic
     },
-    [ACTIONS.MUTATION_CHANGE_WORK_MODE](state) {
-        console.log('')
+    [ACTIONS.MUTATION_CHANGE_WORK_MODE](state, mission) {
+        state.mission = mission
+    },
+    [ACTIONS.MUTATION_UPDATE_CURRENT_ROOM_NAME](state, data){
+        state.currentRoomName = data
+    },
+    changeMission(state, mission) {
+        state.mission = mission
     }
 }
 

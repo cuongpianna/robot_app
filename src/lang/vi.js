@@ -35,7 +35,7 @@ export default {
         imageLibrary: 'Hoặc chọn từ thư viện ảnh',
         uploadImage: 'Hoặc nhấn vào đây để tải ảnh',
         choseCity: 'Chọn Tỉnh/Thành phố',
-        title: 'hệ thống giám sát và điều khiển robot',
+        title: 'hệ thống giám sát robot',
         selectMap: 'Chọn địa điểm',
         robotList: 'Danh sách Robot tại',
         searchByName: 'Tìm kiếm theo tên',
@@ -228,9 +228,9 @@ export default {
         robotManagement: 'Quản lý Robot',
         create: 'Thêm mới Robot',
         robotName: 'Tên robot',
-        editRobot: 'Cập nhật robot',
-        createRobot: 'Thêm mới robot',
-        info: 'Thông tin Robot',
+        editRobot: 'Cấu hình tham số robot',
+        createRobot: 'Cấu hình tham số robot',
+        info: 'Thông tin robot',
         code: 'Mã robot',
         config: 'Cấu hình robot',
         ip: 'Địa chỉ IP',
@@ -247,15 +247,18 @@ export default {
         selectBigArea: 'Chọn địa điểm',
         selectChildArea: 'Chọn tầng',
         privatePort: 'Private port',
-        videoCallOnlineUrl: 'Đường dẫn video call online',
+        videoCallOnlineUrl: 'Đường dẫn video call',
         selectVersion: 'Chọn phiên bản',
-        workAt: 'Nơi làm việc',
+        workAt: 'Địa điểm',
         manageMedia: 'Quản lý media',
         status: 'Trạng thái',
         working: 'Đang làm việc',
         mediaManagement: 'Quản lý media',
         robotControl: 'Điều khiển robot',
-        version: 'Phiên bản robot'
+        version: 'Phiên bản robot',
+        lanConfig: 'Hệ thống sử dụng mạng Lan',
+        internetConfig: 'Hệ thống sử dụng mạng Internet',
+        notWorking: 'Không có tín hiệu'
     },
     userMedia:{
         userMediaManagement:'Quản lý media',
@@ -340,9 +343,9 @@ export default {
     },
     setting: {
         settingManagement: 'Cấu hình hệ thống',
-        onlineSetting: 'Hệ thống trực tuyến?',
+        onlineSetting: 'Hệ thống quản trị trên mạng Lan hay Internet?',
         Select: 'Chọn',
-        hideVideo: 'Ẩn/ hiện video điều khiển',
+        hideVideo: 'Ẩn/ hiện video điều khiển trong màn hình giám sát robot',
         show: 'Hiện',
         hide: 'Ẩn'
     },
@@ -368,7 +371,8 @@ export default {
     robotControl: {
         robotCode: 'Mã Robot: ',
         robotName: 'Tên Robot: ',
-        room: 'Phòng '
+        room: 'Phòng ',
+        version: 'Phiên bản'
     }
 }
 

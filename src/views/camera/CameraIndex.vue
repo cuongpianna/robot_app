@@ -83,11 +83,6 @@
             <span v-else>IP</span>
           </template>
         </el-table-column>
-        <el-table-column :label="generateTitleView('cameraIp', 'camera')" align="center">
-          <template slot-scope="{row}">
-            <span>{{ row.ip }}</span>
-          </template>
-        </el-table-column>
         <el-table-column
           :label="generateTitleView('status', 'usermanagement')"
           class-name="status-col"
@@ -203,6 +198,7 @@ export default {
     })
   },
   mounted() {
+    this.$store.commit('app/CHANGE_APP_TITLE', 'HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN ROBOT')
     this.roleList = this.$store.state.auth.roles
     this.getCameras()
     this.currentUser = this.$store.state.auth.name

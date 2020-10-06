@@ -63,7 +63,6 @@ const mutations = {
 const actions = {
     [ACTIONS.ACT_FETCH_ROBOT_PAGING]({ commit, state }, { current_page, name, user_id, is_active, limit, user_type, is_delete }) {
         return new Promise((resolve, reject) => {
-            console.log(user_type)
             RobotService.getPagination(current_page, name, is_active, limit, user_type, is_delete, user_id)
                 .then(res => {
                     if (res && res.isSuccess) {

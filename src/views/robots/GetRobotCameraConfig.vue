@@ -46,7 +46,8 @@ export default {
   methods: {
     ...mapActions({
       actGetSetting: LABEL.model + ACTIONS.ACT_GET_SETTING,
-      actUpdateSetting: LABEL.model + ACTIONS.ACT_UPDATE_SETTING
+      actUpdateSetting: LABEL.model + ACTIONS.ACT_UPDATE_SETTING,
+      setting: 'auth/setting'
     }),
     initJitsi() {
       const domain = this.jistiDomain
@@ -69,9 +70,14 @@ export default {
       }).then(res => {
         this.formCreate = JSON.parse(JSON.stringify(res.payload.records[0]))
         this.jistiDomain = this.formCreate.jistiDomain
+        if(this.formCreate.isOnline) {
+          this.jistiDomain = this.formCreate.jistiDomainInternet
+        }else {
+          this.jistiDomain = this.formCreate.jistiDomain
+        }
         this.initJitsi()
       })
-    }
+    },
   }
 }
 </script>

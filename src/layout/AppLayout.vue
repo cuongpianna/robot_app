@@ -6,18 +6,13 @@
     <div class="main-container">
       <app-main :hotel-id="hotelId"/>
     </div>
-    <right-panel v-if="showSettings">
-      <settings/>
-    </right-panel>
   </div>
 </template>
 
 <script>
-import RightPanel from '@/components/RightPanel'
 import Sidebar from '@/components/Sidebar'
 import AppMain from '@/components/AppMain'
 import AppHeader from '@/components/AppHeader'
-import Settings from '@/components/Settings/index'
 import ResizeMixin from './mixin/ResizeHandler'
 import Cookies from 'js-cookie'
 
@@ -26,9 +21,7 @@ export default {
   components: {
     Sidebar,
     AppMain,
-    AppHeader,
-    RightPanel,
-    Settings
+    AppHeader
   },
   mixins: [ResizeMixin],
   data() {

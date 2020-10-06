@@ -53,10 +53,7 @@ const actions = {
     },
 
     [ACTIONS.ACT_DELETE_MEDIA]({ commit, state }, id) {
-
-        // debugger;
         return new Promise((resolve, reject) => {
-            debugger;
             UserMediaService.delete(id)
                 .then(res => {
                     if (res && res.isSuccess) {

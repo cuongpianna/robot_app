@@ -56,11 +56,11 @@
                 <input v-model="formCreate.title" type="text" required>
               </div>
               <div class="setting-title">
-                <span class="label">Delta x</span>
+                <span class="label">Delta x (mét)</span>
                 <input v-model="formCreate.deltax" type="text" required>
               </div>
               <div class="setting-title">
-                <span class="label">Delta y</span>
+                <span class="label">Delta y (mét)</span>
                 <input v-model="formCreate.deltay" type="text" required>
               </div>
               <div class="setting-title">
@@ -78,35 +78,13 @@
               </div>
             </div>
           </div>
-          <div v-else>
-            <div v-show="points.length > 0" class="setting-content">
-              <div class="setting-title setting-camera-title">
-                <span class="label">{{ generateTitleView('cameraTitle', 'createMap') }}</span>
-                <v-select
-                  v-model="formCreate.camera"
-                  :items="listCamera"
-                  label="Chọn camera"
-                  solo
-                  dense
-                  :height="10"
-                  return-object
-                  item-text="name"
-                />
-              </div>
-              <div v-for="(item, index) in points" :key="index" class="setting-item">
-                <span>X <input v-model="item.x" type="number" class="input-point" @change="changePoint"></span>
-                <span class="setting-item__right">Y <input v-model="item.y" type="number" class="input-point"></span>
-                <font-awesome-icon icon="times" class="fa-remove" @click="removePoint(index)" />
-              </div>
-            </div>
-          </div>
         </el-scrollbar>
         <div class="object-list-wrap-title">
           <font-awesome-icon class="iconMinus" icon="minus" />
           <el-select v-model="filterListObject" size="small" class="selectObj">
             <el-option value="0" label="Danh sách đối tượng" />
-            <el-option value="1" label="Danh sách phòng" />
-            <el-option value="2" label="Danh sách camera" />
+<!--            <el-option value="1" label="Danh sách phòng" />-->
+<!--            <el-option value="2" label="Danh sách camera" />-->
           </el-select>
         </div>
         <el-scrollbar id="wcp-editor-object-list-wrap" view-class="yf-content">
@@ -136,10 +114,6 @@
         <md-tooltip md-direction="right">{{ generateTitleView('addObject', 'createMap') }}</md-tooltip>
         <font-awesome-icon icon="plus-circle" />
       </div>
-      <!--      <div class="tool-item" :class="{'active': selectedTool == 'addCamera'}" @click="selectTool('addCamera')">-->
-      <!--        <md-tooltip md-direction="right">{{ generateTitleView('addCamera', 'createMap') }}</md-tooltip>-->
-      <!--        <font-awesome-icon icon="camera" />-->
-      <!--      </div>-->
       <div class="tool-item" @click="showMapSetting">
         <md-tooltip md-direction="right">{{ generateTitleView('settingMap', 'createMap') }}</md-tooltip>
         <font-awesome-icon icon="cog" />
@@ -200,12 +174,7 @@ import mimes from '../../components/ImageCropper/utils/mimes'
 import request from '@/help/request.agency'
 
 const LABEL = {
-  name: '',
-  title: 'Area',
-  model: 'area/',
-  slug: 'area',
-  edit: 'Sửa',
-  create: 'Tạo mới'
+  model: 'area/'
 }
 
 export default {
@@ -217,7 +186,6 @@ export default {
   data() {
     return {
       pointIndex: null,
-      listCamera: [],
       dialogMapSetting: false,
       areaObject: {},
       dialogUploadImage: false,
@@ -238,14 +206,11 @@ export default {
       formCreate: {
         title: '',
         id: null,
-        camera: {},
         deltax: 0,
         deltay: 0
       },
       objectList: [],
       selectedObject: '',
-      widthSize: 0,
-      heightSize: 0,
       mapSize: {},
       formCamera: {
         name: '',
@@ -282,6 +247,7 @@ export default {
     }
   },
   mounted() {
+    this.$store.commit('app/CHANGE_APP_TITLE', 'HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN ROBOT')
     const areaId = this.$router.currentRoute.params.id
     if (typeof areaId !== 'undefined' && areaId !== null) {
       this.getArea(areaId)
@@ -305,8 +271,6 @@ export default {
         if (this.areaObject.jsonData) {
           this.objectList = JSON.parse(this.areaObject.jsonData)['objectList']
         }
-
-        this.listCamera = this.areaObject.cameras
 
         this.images = [{
           path: this.folderUpload + this.areaObject.thumb,
@@ -356,6 +320,8 @@ export default {
         this.points = []
         this.formCreate.title = ''
         this.formCreate.id = null
+        this.formCreate.deltax = 0
+        this.formCreate.deltay = 0
         this.selectedObject = {}
         this.points = [
           { x: 0, y: 0 },
@@ -384,13 +350,6 @@ export default {
             this.points.push(item)
           }
         }
-      } else {
-        if (this.selectedTool === 'addCamera') {
-          this.points = [{
-            x: evt.offsetX,
-            y: evt.offsetY
-          }]
-        }
       }
     },
     getPointFill(point) {
@@ -403,8 +362,6 @@ export default {
       var objectType = 'object'
       if (this.selectedTool === 'addObject') {
         objectType = 'object'
-      } else {
-        objectType = 'camera'
       }
 
       if (this.selectedTool === 'deleteObject') {
@@ -421,7 +378,8 @@ export default {
               points: this.points,
               id: uuid,
               type: objectType,
-              camera: this.formCreate.camera
+              deltax: this.formCreate.deltax,
+              deltay: this.formCreate.deltay
             })
             this.saveSetting()
           } else {
@@ -429,7 +387,8 @@ export default {
               if (item.id === this.formCreate.id) {
                 item.name = this.formCreate.title
                 item.points = this.points
-                item.camera = this.formCreate.camera
+                item.deltax = this.formCreate.deltax
+                item.deltay = this.formCreate.deltay
                 this.saveSetting()
                 break
               }
@@ -443,83 +402,7 @@ export default {
           })
         }
       } else {
-        if (!this.formCreate.camera.id) {
-          this.$notify.warning({
-            title: this.generateTitleView('warning', 'message'),
-            message: 'Vui lòng chọn camera!',
-            duration: 3000
-          })
-        } else {
-          if (this.selectedTool === 'addCamera') {
-            var found = false
-            for (const item of this.objectList) {
-              if (item.camera.id === this.formCreate.camera.id) {
-                this.$notify.warning({
-                  title: this.generateTitleView('warning', 'message'),
-                  message: 'Camera đã có trên map. Vui lòng chọn camera khác!',
-                  duration: 3000
-                })
-                this.formCreate.camera = {}
-                found = true
-                break
-              }
-            }
-
-            if (!found) {
-              if (this.formCreate.id == null) {
-                const uuid = Math.random().toString(36).slice(-6)
-                this.objectList.push({
-                  name: this.formCreate.title,
-                  points: this.points,
-                  id: uuid,
-                  type: objectType,
-                  camera: this.formCreate.camera
-                })
-
-                this.saveSetting()
-              } else {
-                for (const obj of this.objectList) {
-                  if (obj.id === this.formCreate.id) {
-                    obj.name = this.formCreate.title
-                    obj.points = this.points
-                    obj.camera = this.formCreate.camera
-
-                    this.points = []
-                    this.formCreate.title = ''
-                    this.saveSetting()
-                    break
-                  }
-                }
-              }
-            }
-          } else {
-            if (this.formCreate.id == null) {
-              const uuid = Math.random().toString(36).slice(-6)
-              this.objectList.push({
-                name: this.formCreate.title,
-                points: this.points,
-                id: uuid,
-                type: objectType,
-                camera: this.formCreate.camera
-              })
-
-              this.saveSetting()
-            } else {
-              for (const obj of this.objectList) {
-                if (obj.id === this.formCreate.id) {
-                  obj.name = this.formCreate.title
-                  obj.points = this.points
-                  obj.camera = this.formCreate.camera
-
-                  this.points = []
-                  this.formCreate.title = ''
-                  this.saveSetting()
-                  break
-                }
-              }
-            }
-          }
-        }
+        this.saveSetting()
       }
     },
     selectObject(item) {
@@ -527,13 +410,10 @@ export default {
       this.points = item.points
       this.formCreate.title = item.name
       this.formCreate.id = item.id
-      this.formCreate.camera = item.camera
+      this.formCreate.deltax = item.deltax
+      this.formCreate.deltay = item.deltay
       if (item.type === 'object') {
         this.selectedTool = 'editObject'
-      } else {
-        this.selectedTool = 'editCamera'
-
-        this.listCamera = this.areaObject.cameras
       }
     },
     saveSetting() {
@@ -553,7 +433,6 @@ export default {
           this.selectedTool = ''
           this.points = []
           this.formCreate.title = ''
-          this.formCreate.camera = {}
           this.getArea(this.areaObject.id)
           this.$notify.success({
             title: this.generateTitleView('success', 'message'),

@@ -28,7 +28,7 @@ export default {
         imageLibrary: 'Or chose image from library',
         uploadImage: 'Or click here to up load image',
         choseCity: 'Chose city',
-        title: 'Robot monitoring and control system',
+        title: 'Robot monitoring system',
         robotControl: 'Controlling',
         videoCall: 'Video call'
     },
@@ -218,7 +218,10 @@ export default {
         working: 'Working',
         mediaManagement: 'Media management',
         robotControl: 'Robot Controlling',
-        version: 'Robot version'
+        version: 'Robot version',
+        lanConfig: 'System use Lan network',
+        internetConfig: 'System use Internet network',
+        notWorking: 'Not working'
     },
     veeValidate: {
         username: 'Username',
@@ -315,6 +318,7 @@ export default {
     robotControl: {
         robotCode: 'Robot No: ',
         robotName: 'Robot Name: ',
-        room: 'Room '
+        room: 'Room ',
+        version: 'Version'
     }
 }

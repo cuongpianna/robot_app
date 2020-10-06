@@ -122,24 +122,26 @@ export default {
       handler(newValue) {
         for(var area of newValue) {
           var ref = '#map-' + area.id
-          const width = document.querySelector(ref).offsetWidth
-          const height = document.querySelector(ref).offsetHeight
-          for(var robot of area.robots) {
-            if(robot.point_x !== undefined) {
-              var robotPoint = []
-              const x = Math.round(robot.point_x / robot.map.width * 100 * width / 100 / 100)
-              const y = Math.round(robot.point_y / robot.map.height * 100 * height / 100 / 100)
-              robotPoint.push(x)
-              robotPoint.push(y)
-              robot.px = x
-              robot.py = y
-              const deg = parseInt(robot.deg)
+          if(document.querySelector(ref) != null) {
+            const width = document.querySelector(ref).offsetWidth
+            const height = document.querySelector(ref).offsetHeight
+            for(var robot of area.robots) {
+              if(robot.point_x !== undefined) {
+                var robotPoint = []
+                const x = Math.round(robot.point_x / robot.map.width * 100 * width / 100 / 100)
+                const y = Math.round(robot.point_y / robot.map.height * 100 * height / 100 / 100)
+                robotPoint.push(x)
+                robotPoint.push(y)
+                robot.px = x
+                robot.py = y
+                const deg = parseInt(robot.deg)
 
-              const point_x = robotPoint[0] + Math.cos(this.convertDeg(deg) * Math.PI / 180) * 30
-              const point_y = robotPoint[1] + Math.sin(this.convertDeg(deg) * Math.PI / 180) * 30
+                const point_x = robotPoint[0] + Math.cos(this.convertDeg(deg) * Math.PI / 180) * 30
+                const point_y = robotPoint[1] + Math.sin(this.convertDeg(deg) * Math.PI / 180) * 30
 
-              robot.arrowX = point_x
-              robot.arrowY = point_y
+                robot.arrowX = point_x
+                robot.arrowY = point_y
+              }
             }
           }
         }
@@ -248,18 +250,6 @@ export default {
             newPoints.push(newPoint)
           }
           item.newPoints = newPoints
-        } else {
-          points = item.points[0]
-
-          left = points.x / sizeMap.w * 100
-          top = points.y / sizeMap.h * 100
-
-          position = {
-            left: left,
-            top: top
-          }
-
-          item.position = position
         }
       }
 

@@ -1,25 +1,25 @@
 <template>
   <div class="navbar">
-    <span class="txt-description">Thu nhỏ</span>
-    <hamburger v-if="isShowIcon" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <span class="txt-description">Thu nh?</span>
+    <hamburger v-if="isShowIcon" class="hamburger-container" @toggleClick="toggleSideBar"/>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-// import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
 export default {
   name: 'Navbar',
   components: {
-    // Breadcrumb,
     Hamburger
   },
   props: {
     isShowIcon: {
       type: Boolean,
-      default() { return true }
+      default() {
+        return true
+      }
     }
   },
   computed: {
@@ -52,21 +52,24 @@ export default {
   background: #409EFF;
   display: flex;
   justify-content: flex-end;
+
   .txt-description {
     color: #fff;
   }
+
   .hamburger-container {
     line-height: 30px;
     height: 100%;
     float: left;
     cursor: pointer;
     transition: background .3s;
-    -webkit-tap-highlight-color:transparent;
+    -webkit-tap-highlight-color: transparent;
     fill: #fff;
 
     &:hover {
       background: rgba(0, 0, 0, .025)
     }
+
   }
 
   .breadcrumb-container {
@@ -97,6 +100,7 @@ export default {
         &:hover {
           background: rgba(0, 0, 0, .025)
         }
+
       }
     }
 
@@ -121,6 +125,7 @@ export default {
           top: 25px;
           font-size: 12px;
         }
+
       }
     }
   }

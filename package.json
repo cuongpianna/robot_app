@@ -7,14 +7,11 @@
   "dependencies": {
     "awe-dnd": "^0.3.4",
     "axios": "0.18.1",
-    "echarts": "^4.8.0",
     "element-ui": "2.7.2",
     "file-saver": "^2.0.2",
     "fuse.js": "^3.4.3",
     "js-cookie": "2.2.0",
-    "js-xlsx": "^0.8.22",
     "jsmpeg-player": "^3.0.3",
-    "jstoxml": "^1.6.7",
     "material-design-icons": "^3.0.1",
     "moment": "^2.25.3",
     "normalize.css": "7.0.0",
@@ -32,7 +29,6 @@
     "vue-drag-drop": "^1.1.4",
     "vue-event-handler": "^1.1.8",
     "vue-fabric-wrapper": "^0.3.71",
-    "vue-gantt-schedule-timeline-calendar": "^1.0.33",
     "vue-highlightjs": "^1.3.3",
     "vue-lazyload": "^1.3.3",
     "vue-loader": "^15.9.0",
@@ -49,11 +45,9 @@
     "vue-upload-multiple-image": "^1.1.4",
     "vue-video-player": "^5.0.2",
     "vue2-daterange-picker": "^0.4.6",
-    "vue2-google-maps": "^0.10.7",
     "vuesax": "3.9.0",
     "vuetify": "^2.2.32",
-    "vuex": "3.1.0",
-    "xlsx": "^0.15.1"
+    "vuex": "3.1.0"
   },
   "description": "Agency management system",
   "devDependencies": {

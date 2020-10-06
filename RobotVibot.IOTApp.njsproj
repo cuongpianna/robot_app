@@ -214,72 +214,32 @@
     <Content Include="src\assets\pin.png" />
     <Content Include="src\assets\robot.jpg" />
     <Content Include="src\assets\robot1.svg" />
+    <Content Include="src\assets\robot10.png" />
     <Content Include="src\assets\robot2.svg" />
     <Content Include="src\assets\robot3.svg" />
     <Content Include="src\assets\robot4.svg" />
     <Content Include="src\assets\robot5.svg" />
+    <Content Include="src\assets\robot6.png" />
+    <Content Include="src\assets\robot7.png" />
+    <Content Include="src\assets\robot8.png" />
+    <Content Include="src\assets\robot9.png" />
     <Content Include="src\assets\videothumb.jpg" />
     <Content Include="src\assets\watermark.png" />
     <Content Include="src\components\ActionButton\index.vue" />
-    <Content Include="src\components\AutoSuggest\index.vue" />
-    <Content Include="src\components\AutoSuggest\parts\DefaultSection.js">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\AutoSuggest\util.js" />
-    <Content Include="src\components\Camera\map.vue" />
-    <Content Include="src\components\Camera\RobotFilter.vue" />
-    <Content Include="src\components\CheckTable\index.vue">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\CollapsePanel\collapsePanel.vue" />
     <Content Include="src\components\Dashboard\map.vue">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\Dashboard\RobotFilter.vue">
+    <Content Include="src\components\DragSelect\index.vue">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\Dashboard\RobotList.vue">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\Dragger\dragger.vue" />
     <Content Include="src\components\IconButton\index.vue" />
-    <Content Include="src\components\Popup\price.day.setting.vue" />
-    <Content Include="src\components\Popup\price.vue" />
-    <Content Include="src\components\Popup\index.vue" />
-    <Content Include="src\components\Scada\Basic\Base.vue" />
-    <Content Include="src\components\Scada\Basic\Guage.vue" />
-    <Content Include="src\components\Scada\Basic\icons\scada_guage.png" />
-    <Content Include="src\components\Scada\Basic\icons\scada_label.png" />
-    <Content Include="src\components\Scada\Basic\icons\scada_levelbar.png" />
-    <Content Include="src\components\Scada\Basic\index.js" />
-    <Content Include="src\components\Scada\Basic\Label.vue" />
-    <Content Include="src\components\Scada\Basic\LevelBar.vue" />
-    <Content Include="src\components\Scada\Basic\Panel.vue" />
-    <Content Include="src\components\Scada\Basic\Rac.vue" />
-    <Content Include="src\components\Scada\Basic\Svg.vue" />
-    <Content Include="src\components\Scada\Basic\SvgComp.vue" />
-    <Content Include="src\components\Scada\config.js" />
-    <Content Include="src\components\Scada\Extend_1\index.js" />
-    <Content Include="src\components\Scada\Extend_2\index.js" />
-    <Content Include="src\components\Scada\SvgColorFilterList.vue" />
-    <Content Include="src\components\SettingButton\index.vue" />
-    <Content Include="src\components\SingleSuggest\index.vue" />
-    <Content Include="src\components\SingleSuggest\pointerScroll.js" />
+    <Content Include="src\components\Navbar.vue">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\PanThumb\index.vue">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\Sticky\index.vue" />
-    <Content Include="src\components\SvgCamera\index.vue" />
-    <Content Include="src\components\SVGEdit\actionBar.vue" />
-    <Content Include="src\components\SVGEdit\attrsPanel.vue" />
-    <Content Include="src\components\SVGEdit\complistPanel.vue" />
-    <Content Include="src\components\SVGEdit\layoutPanel.vue" />
-    <Content Include="src\components\SVGEdit\paramsPanel.vue" />
-    <Content Include="src\components\SVGEdit\previewCode.vue" />
-    <Content Include="src\components\SVGEdit\previewScada.vue" />
-    <Content Include="src\components\SVGEdit\scadaDefs.vue" />
-    <Content Include="src\components\SVGEdit\settingsDialog.vue" />
-    <Content Include="src\components\SVGEdit\statusBar.vue" />
-    <Content Include="src\components\SVGEdit\testPanel.vue" />
-    <Content Include="src\components\SVGEdit\toolsPanel.vue" />
-    <Content Include="src\components\SVGEdit\workArea.vue" />
     <Content Include="src\components\SvgRobot\index.vue" />
     <Content Include="src\components\SvgShape\index.vue" />
     <Content Include="src\components\ToggleButton\index.vue" />
@@ -289,9 +249,6 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\filters\index.js" />
-    <Content Include="src\help\utils\excel.js">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="src\help\utils\fileHelper.js" />
     <Content Include="src\help\utils\i18n.js" />
     <Content Include="src\help\utils\routeHelper.js">
@@ -339,15 +296,10 @@
     <Content Include="src\icons\svg\tree.svg" />
     <Content Include="src\icons\svg\user.svg" />
     <Content Include="src\components\Dashboard\footer.vue" />
-    <Content Include="src\components\Dashboard\header.vue" />
-    <Content Include="src\components\Dashboard\functions.vue" />
-    <Content Include="src\components\Dashboard\setting.vue" />
-    <Content Include="src\components\DragSelect\index.vue" />
     <Content Include="src\help\auth.js" />
     <Content Include="src\help\request.agency.js" />
     <Content Include="src\help\request.js" />
     <Content Include="src\components\AvatarUpload.vue" />
-    <Content Include="src\components\Breadcrumb\index.vue" />
     <Content Include="src\components\Hamburger\index.vue" />
     <Content Include="src\components\HeaderSearch\index.vue" />
     <Content Include="package.json" />
@@ -359,12 +311,9 @@
     <Content Include="src\components\ImageCropper\utils\mimes.js" />
     <Content Include="src\components\Loading.vue" />
     <Content Include="src\components\Pagination\index.vue" />
-    <Content Include="src\components\PanThumb\index.vue" />
-    <Content Include="src\components\RightPanel\index.vue" />
     <Content Include="src\components\Screenfull\index.vue" />
     <Content Include="src\components\SizeSelect\index.vue" />
     <Content Include="src\components\SvgIcon\index.vue" />
-    <Content Include="src\components\ThemePicker\index.vue" />
     <Content Include="src\help\settingdefault.js" />
     <Content Include="src\help\utils\const.js" />
     <Content Include="src\help\utils\index.js" />
@@ -374,12 +323,9 @@
     <Content Include="src\lang\en.js" />
     <Content Include="src\lang\vi.js" />
     <Content Include="src\lang\index.js" />
-    <Content Include="src\layout\AppMap.vue" />
     <Content Include="src\layout\AppLayout.vue" />
     <Content Include="src\components\AppHeader\index.vue" />
     <Content Include="src\components\AppMain.vue" />
-    <Content Include="src\components\Navbar.vue" />
-    <Content Include="src\components\Settings\index.vue" />
     <Content Include="src\components\Sidebar\FixiOSBug.js" />
     <Content Include="src\components\Sidebar\index.vue" />
     <Content Include="src\components\Sidebar\Item.vue" />
@@ -500,8 +446,6 @@
     <Content Include="src\styles\theme.scss" />
     <Content Include="src\styles\transition.scss" />
     <Content Include="src\styles\variables.scss" />
-    <Content Include="src\utils\guid.js" />
-    <Content Include="src\utils\scadaVueTpl.js" />
     <Content Include="src\views\404.vue" />
     <Content Include="src\views\area\create.vue" />
     <Content Include="src\views\area\createMap.vue" />
@@ -549,7 +493,6 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\views\dashboard\home.vue" />
-    <Content Include="src\views\dashboard\index.vue" />
     <Content Include="src\views\login\index.vue" />
     <Content Include="src\views\module\EditModule.vue" />
     <Content Include="src\views\module\Index.vue" />
@@ -643,10 +586,9 @@
     <Folder Include="src\assets\img\scada\svg\" />
     <Folder Include="src\assets\js\" />
     <Folder Include="src\components\ActionButton\" />
-    <Folder Include="src\components\CheckTable\" />
     <Folder Include="src\components\IconButton\" />
-    <Folder Include="src\components\RoomPoint\" />
-    <Folder Include="src\components\SvgCamera\" />
+    <Folder Include="src\components\DragSelect\" />
+    <Folder Include="src\components\PanThumb\" />
     <Folder Include="src\components\SvgRobot\" />
     <Folder Include="src\components\SvgShape\" />
     <Folder Include="src\components\VibotButton\" />
@@ -656,7 +598,6 @@
     <Folder Include="src\views\robots\" />
     <Folder Include="src\views\robot\components\" />
     <Folder Include="src\views\setting\" />
-    <Folder Include="src\components\Camera\" />
     <Folder Include="src\views\robotversion\" />
     <Folder Include="src\views\usermedia\" />
     <Folder Include="static\" />
@@ -666,19 +607,6 @@
     <Folder Include="src\assets\404_images\" />
     <Folder Include="src\assets\css\" />
     <Folder Include="src\assets\css\highlight\" />
-    <Folder Include="src\components\AutoSuggest\" />
-    <Folder Include="src\components\AutoSuggest\parts\" />
-    <Folder Include="src\components\CollapsePanel\" />
-    <Folder Include="src\components\Dragger\" />
-    <Folder Include="src\components\Scada\" />
-    <Folder Include="src\components\Scada\Basic\" />
-    <Folder Include="src\components\Scada\Basic\icons\" />
-    <Folder Include="src\components\Scada\Extend_1\" />
-    <Folder Include="src\components\Scada\Extend_2\" />
-    <Folder Include="src\components\SVGEdit\" />
-    <Folder Include="src\components\Popup\" />
-    <Folder Include="src\components\SettingButton\" />
-    <Folder Include="src\components\SingleSuggest\" />
     <Folder Include="src\components\Sticky\" />
     <Folder Include="src\components\ToggleButton\" />
     <Folder Include="src\filters\" />
@@ -687,23 +615,17 @@
     <Folder Include="src\icons\roommap\" />
     <Folder Include="src\icons\svg\" />
     <Folder Include="src\components\" />
-    <Folder Include="src\components\Breadcrumb\" />
-    <Folder Include="src\components\DragSelect\" />
     <Folder Include="src\components\Hamburger\" />
     <Folder Include="src\components\HeaderSearch\" />
     <Folder Include="src\components\ImageCropper\" />
     <Folder Include="src\components\ImageCropper\utils\" />
     <Folder Include="src\components\Dashboard\" />
     <Folder Include="src\components\Pagination\" />
-    <Folder Include="src\components\PanThumb\" />
-    <Folder Include="src\components\RightPanel\" />
     <Folder Include="src\components\Screenfull\" />
     <Folder Include="src\components\SizeSelect\" />
     <Folder Include="src\components\SvgIcon\" />
-    <Folder Include="src\components\ThemePicker\" />
     <Folder Include="src\help\utils\" />
     <Folder Include="src\components\AppHeader\" />
-    <Folder Include="src\components\Settings\" />
     <Folder Include="src\components\Sidebar\" />
     <Folder Include="src\layout\mixin\" />
     <Folder Include="src\layout\" />
@@ -715,7 +637,6 @@
     <Folder Include="src\store\modules\" />
     <Folder Include="src\store\constants\" />
     <Folder Include="src\styles\" />
-    <Folder Include="src\utils\" />
     <Folder Include="src\views\" />
     <Folder Include="src\store\" />
     <Folder Include="src\services\" />

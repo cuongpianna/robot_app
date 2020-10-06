@@ -181,6 +181,7 @@ export default {
     })
   },
   mounted() {
+    this.$store.commit('app/CHANGE_APP_TITLE', 'HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN ROBOT')
     this.socket = this.initSocket()
     this.roleList = this.$store.state.auth.roles
     this.currentUser = this.$store.state.auth.name

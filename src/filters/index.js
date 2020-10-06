@@ -32,8 +32,16 @@ export function formatDayWeekend(value) {
 }
 
 export function fullDatetime(time) {
-    var dt = new Date(time)
-    return moment(dt).format('DD/MM/YYYY HH:mm')
+    const dt = new Date(time)
+    const e = moment(dt).format('A')
+    let a = ''
+    if(e === 'AM') {
+        a = ' SA'
+    }else {
+        a = ' CH'
+    }
+    var result = moment(dt).format('DD/MM/YYYY hh:mm')
+    return result + a
 }
 
 export function stayTime(time) {

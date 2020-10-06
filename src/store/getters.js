@@ -15,10 +15,7 @@ const getters = {
     userType: state => state.auth.userType,
     //agency
     userId: state => state.auth.id,
-    // agencyId: state => state.auth.hotelId,
-    // agency: state => state.hotel.item,
-    // agency_list: state => state.hotel.list,
-    // agencys: state => state.hotel.list,
-    bgImages: state => state.file.listImages || []
+    bgImages: state => state.file.listImages || [],
+    appTitle: state => state.app.appTitle
 }
 export default getters

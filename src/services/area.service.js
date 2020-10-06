@@ -2,7 +2,6 @@ import request from '@/help/request.agency'
 
 class AreaService {
     getAllChildArea(user_type, user_id) {
-        console.log(user_type)
         return request({
             url: '/area/getAllChildArea',
             method: 'post',

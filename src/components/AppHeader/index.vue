@@ -16,7 +16,7 @@
         <a href="#" class="agency-name"><span class="agency-code">{{ agencyCode }}</span> - {{ agencyName }}</a>
       </div>
       <div v-else class="agency-info">
-        <span class="agency-name">{{ generateTitleView('title', 'dashboard') }}</span>
+        <span class="agency-name">{{ appTitle }}</span>
       </div>
     </div>
     <div class="user-info">
@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
@@ -81,6 +82,9 @@ export default {
       default: ''
     }
   },
+  computed: {
+    ...mapGetters(['appTitle'])
+  },
   data() {
     return {
       userName: '',
@@ -98,10 +102,6 @@ export default {
     this.agencyAvatar = this.$store.state.auth.agencyAvatar
   },
   methods: {
-    toogleMenu() {
-      const el = document.querySelector('.setting-btn')
-      el.classList.toggle('active')
-    },
     async logout() {
       await this.$store.dispatch('auth/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)

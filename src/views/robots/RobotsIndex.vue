@@ -138,10 +138,12 @@ import * as ROBOT_ACTIONS from '../../store/constants/robot'
 import * as ROBOTMEDIA_ACTIONS from '../../store/constants/robotmedia'
 import RobotMediaService from '../../services/robotmedia.service'
 import { dowloadFile } from '../../help/utils/fileHelper'
+import * as ACTIONS from '@/store/constants/setting'
 
 const LABEL = {
   modelRobot: 'robot/',
-  modelMediaRobot: 'robotmedia/'
+  modelMediaRobot: 'robotmedia/',
+  model: 'setting/'
 }
 
 export default {
@@ -152,6 +154,7 @@ export default {
   },
   data() {
     return {
+      settingObj: {},
       jistiDomain: '',
       isLoading: false,
       listQuery: {
@@ -202,6 +205,7 @@ export default {
   mounted() {
     this.robotCode = this.$router.currentRoute.params.id
     this.getRobotInfo()
+    this.getSetting()
   },
   methods: {
     ...mapActions({
@@ -209,7 +213,8 @@ export default {
       actGetRobotInfo:
           LABEL.modelRobot + ROBOT_ACTIONS.ACT_GET_ROBOT_INFO_BY_CODE,
       actExportMedia:
-          LABEL.modelMediaRobot + ROBOTMEDIA_ACTIONS.ACT_EXPORT_MEDIA
+          LABEL.modelMediaRobot + ROBOTMEDIA_ACTIONS.ACT_EXPORT_MEDIA,
+      actGetSetting: LABEL.model + ACTIONS.ACT_GET_SETTING
     }),
     getRobotMedia(robotId) {
       this.actGetRobotMedia({
@@ -236,15 +241,17 @@ export default {
     openVideoCall() {
       this.mediaSelected = null
     },
-    getRobotInfo() {
-      this.actGetRobotInfo(this.robotCode).then(res => {
+    async getRobotInfo() {
+      const result = await this.getSetting()
+      const { jistiDomain, jistiDomainInternet, isOnline} = result
+       this.actGetRobotInfo(this.robotCode).then(res => {
         this.robotInfo = res.payload.records
         var cameras = this.robotInfo.cameras
         this.getRobotMedia(this.robotInfo.id)
-        if(this.setting.isOnline) {
-          this.jistiDomain = this.robotInfo.videoCallOnlineUrl
+        if(isOnline) {
+          this.jistiDomain = jistiDomainInternet
         }else {
-          this.jistiDomain = this.robotInfo.videoCallUrl
+          this.jistiDomain = jistiDomain
         }
         this.initJitsi(cameras)
       })
@@ -355,22 +362,22 @@ export default {
           if (currentRobotId == robotID) {
             var mediaIds = []
             mediaIds.push(mediaId)
-            var data = { RobotId: currentRobotId, MediaIds: mediaIds }
-            RobotMediaService.export(data).then(res => {
-              if (res.isSuccess) {
-                var exportDatas = res.records
-                if (exportDatas != null) {
-                  exportDatas.forEach(element => {
-                    dowloadFile(element)
-
-                    setTimeout(function() {
-                      location.reload()
-                      // _this.getRobotInfo(robotId);
-                    }, 2000)
-                  })
-                }
-              }
-            })
+            // var data = { RobotId: currentRobotId, MediaIds: mediaIds }
+            // RobotMediaService.export(data).then(res => {
+            //   if (res.isSuccess) {
+            //     var exportDatas = res.records
+            //     if (exportDatas != null) {
+            //       exportDatas.forEach(element => {
+            //         dowloadFile(element)
+            //
+            //         setTimeout(function() {
+            //           location.reload()
+            //           // _this.getRobotInfo(robotId);
+            //         }, 2000)
+            //       })
+            //     }
+            //   }
+            // })
           }
         }
         if (message.includes('SelectMedia_')) {
@@ -392,6 +399,10 @@ export default {
           }
         }
 
+        if(message.includes('reload')) {
+          location.reload()
+        }
+
         if (message.includes('DeletedMedia_')) {
           location.reload()
         }
@@ -402,7 +413,16 @@ export default {
       }
       return socket
     },
-    generateTitleView
+    generateTitleView,
+    async getSetting() {
+      var result = await this.actGetSetting({
+        current_page: this.listQuery.page,
+        name: this.listQuery.name,
+        is_active: this.listQuery.status,
+        limit: this.listQuery.limit
+      })
+      return result.payload.records[0]
+    }
   }
 }
 </script>

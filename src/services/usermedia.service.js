@@ -1,5 +1,4 @@
 import request from '@/help/request.agency'
-import axios from 'axios'
 
 class UserMediaService {
     fetchList() {
@@ -17,10 +16,10 @@ class UserMediaService {
 
     getPagination(current_page = 1, name = '', is_active = '', limit = 100, user_id = '', is_delete = '') {
         return request({
-            url: '/usermedia/GetPagination',
+            url: '/usermedia/GetPaging',
             method: 'post',
             data: {
-                CurrentPage: current_page,
+                CurrentPage: 1,
                 PageSize: limit,
                 Data: {
                     FileName: name,
@@ -47,7 +46,6 @@ class UserMediaService {
         })
     }
     uploadMediaToRobot(data) {
-        // debugger;
         return request({
             url: '/usermedia/uploadmediatorobot',
             method: 'post',

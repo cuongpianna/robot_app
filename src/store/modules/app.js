@@ -8,7 +8,8 @@ const state = {
     },
     device: 'desktop',
     size: Cookies.get('size') || 'default',
-    language: getLanguage()
+    language: getLanguage(),
+    appTitle: 'HỆ THỐNG GIÁM SÁT ROBOT'
 }
 
 const mutations = {
@@ -36,6 +37,9 @@ const mutations = {
     SET_LANGUAGE: (state, language) => {
         state.language = language
         Cookies.set('language', language)
+    },
+    CHANGE_APP_TITLE: (state, title) => {
+        state.appTitle = title
     }
 }
 

@@ -25,7 +25,7 @@
             </div>
           </div>
         </sticky>
-        <v-card class="role-infor">
+        <v-card class="role-info">
           <div class="role-info__inner">
             <div class="role-info__inners">
               <div class="info-title">{{ generateTitleView('info', 'camera') }}</div>
@@ -49,19 +49,7 @@
                     </el-col>
 
                     <el-col :span="12">
-                      <ValidationProvider
-                        v-slot="{ errors }"
-                        rules="required"
-                        :name="generateTitleView('ip', 'veeValidate')"
-                      >
-                        <v-text-field
-                          v-model="formCreate.ip"
-                          :label="generateTitleView('cameraIp', 'camera')"
-                          outlined
-                          :height="10"
-                        />
-                        <span class="vee-errors">{{ errors[0] }}</span>
-                      </ValidationProvider>
+
                     </el-col>
                   </el-row>
 
@@ -122,20 +110,20 @@
                       />
                     </el-col>
                   </el-row>
-                  
+
                   <el-row :gutter="40" class="mb-10">
-                     <el-col :span="12">
-                       <v-select
-                          v-model="formCreate.functionType"
-                          :items="CAMERA_FUNCTIOM_TYPE"
-                          item-text="label"
-                          item-value="value"
-                          :label="generateTitleView('functionType', 'camera')"
-                          persistent-hint
-                          dense
-                          outlined
-                          class="cameraSelect"
-                        />
+                    <el-col :span="12">
+                      <v-select
+                        v-model="formCreate.functionType"
+                        :items="CAMERA_FUNCTIOM_TYPE"
+                        item-text="label"
+                        item-value="value"
+                        :label="generateTitleView('functionType', 'camera')"
+                        persistent-hint
+                        dense
+                        outlined
+                        class="cameraSelect"
+                      />
 
                     </el-col>
                     <el-col :span="12">
@@ -175,30 +163,27 @@
   </div>
 </template>
 <script>
-import Sticky from "@/components/Sticky";
-import { generateTitleView } from "@/help/utils/i18n";
-import { mapGetters, mapActions } from "vuex";
-import * as ACTIONS from "../../store/constants/camera";
+import Sticky from '@/components/Sticky'
+import { generateTitleView } from '@/help/utils/i18n'
+import { mapGetters, mapActions } from 'vuex'
+import * as ACTIONS from '../../store/constants/camera'
 
 const LABEL = {
-  model: "camera/",
-  title: "cameras",
-  edit: "Sửa",
-  create: "Tạo mới"
-};
+  model: 'camera/'
+}
 
 const defaultCreate = {
-  name: "",
-  ip: "",
-  description: "",
+  name: '',
+  ip: '',
+  description: '',
   isActive: true,
-  code: "",
+  code: '',
   type: 1,
-  position: ""
-};
+  position: ''
+}
 
 export default {
-  name: "CameraCreate",
+  name: 'CameraCreate',
   components: {
     Sticky
   },
@@ -208,34 +193,35 @@ export default {
       formCreate: JSON.parse(JSON.stringify(defaultCreate)),
       formTitle:
         this.$router.currentRoute.params.id != null
-          ? this.generateTitleView("editCamera", "camera")
-          : this.generateTitleView("createCamera", "camera"),
-      currentUser: "",
-      currentDate: "",
+          ? this.generateTitleView('editCamera', 'camera')
+          : this.generateTitleView('createCamera', 'camera'),
+      currentUser: '',
+      currentDate: '',
       CAMERA_TYPE: [
-        { value: 1, label: "USB" },
-        { value: 2, label: "IP" }
+        { value: 1, label: 'USB' },
+        { value: 2, label: 'IP' }
       ],
       CAMERA_FUNCTIOM_TYPE: [
-        { value: null, label: "Chưa chọn" },
-        { value: 1, label: "Camera giao tiếp" },
-        { value: 2, label: "Camera dẫn đường" }
+        { value: null, label: 'Chưa chọn' },
+        { value: 1, label: 'Camera giao tiếp' },
+        { value: 2, label: 'Camera dẫn đường' }
       ]
-    };
+    }
   },
   computed: {
     ...mapGetters({
-      language: "language"
+      language: 'language'
     })
   },
   mounted() {
-    const cameraId = this.$router.currentRoute.params.id;
-    if (typeof cameraId !== "undefined" && cameraId !== null) {
-      this.getCamera(cameraId);
+    this.$store.commit('app/CHANGE_APP_TITLE', 'HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN ROBOT')
+    const cameraId = this.$router.currentRoute.params.id
+    if (typeof cameraId !== 'undefined' && cameraId !== null) {
+      this.getCamera(cameraId)
     } else {
-      this.formCreate.code = this.generate(4);
+      this.formCreate.code = this.generate(4)
     }
-    this.currentUser = this.$store.state.auth.name;
+    this.currentUser = this.$store.state.auth.name
   },
   methods: {
     ...mapActions({
@@ -244,87 +230,83 @@ export default {
       actEditCamera: LABEL.model + ACTIONS.ACT_EDIT_CAMERA
     }),
     handleSubmitUser() {
-      this.formTitle === this.generateTitleView("editCamera", "camera")
+      this.formTitle === this.generateTitleView('editCamera', 'camera')
         ? this.editCamera()
-        : this.createCamera();
+        : this.createCamera()
     },
     getCamera(id) {
       this.actGetCurrentCamera(id).then(res => {
-        const data = res.payload.records;
-        this.formCreate = JSON.parse(JSON.stringify(data));
-      });
+        const data = res.payload.records
+        this.formCreate = JSON.parse(JSON.stringify(data))
+      })
     },
     createCamera() {
-      this.formCreate["created"] = new Date().toJSON();
-      this.formCreate["createdBy"] = this.currentUser;
+      this.formCreate['created'] = new Date().toJSON()
+      this.formCreate['createdBy'] = this.currentUser
       this.actCreateCamera(this.formCreate).then(res => {
         if (res.isSuccess) {
           this.$notify.success({
-            title: this.generateTitleView("success", "message"),
-            message: this.generateTitleView("successMessage", "message"),
+            title: this.generateTitleView('success', 'message'),
+            message: this.generateTitleView('successMessage', 'message'),
             duration: 2000
-          });
+          })
           setTimeout(() => {
-            window.location.href = "/#/users/cameras/index";
-          }, 2000);
+            window.location.href = '/#/users/cameras/index'
+          }, 2000)
         } else {
           this.$notify.error({
-            title: this.generateTitleView("doctors", "message"),
+            title: this.generateTitleView('doctors', 'message'),
             message: res.message,
             duration: 2000
-          });
+          })
         }
-      });
+      })
     },
     editCamera() {
-      this.formCreate["modified"] = new Date().toJSON();
-      this.formCreate["modifiedBy"] = this.currentUser;
+      this.formCreate['modified'] = new Date().toJSON()
+      this.formCreate['modifiedBy'] = this.currentUser
       this.actEditCamera(this.formCreate).then(res => {
         if (res.isSuccess) {
           this.$notify.success({
-            title: this.generateTitleView("success", "message"),
-            message: this.generateTitleView("successMessage", "message"),
+            title: this.generateTitleView('success', 'message'),
+            message: this.generateTitleView('successMessage', 'message'),
             duration: 2000
-          });
+          })
           setTimeout(() => {
-            window.location.href = "/#/users/cameras/index";
-          }, 2000);
+            window.location.href = '/#/users/cameras/index'
+          }, 2000)
         } else {
           this.$notify.error({
-            title: this.generateTitleView("error", "message"),
-            message: this.generateTitleView("errorMessage", "message"),
+            title: this.generateTitleView('error', 'message'),
+            message: this.generateTitleView('errorMessage', 'message'),
             duration: 2000
-          });
+          })
           setTimeout(() => {
-            window.location.href = "/#/users/cameras/index";
-          }, 2000);
+            window.location.href = '/#/users/cameras/index'
+          }, 2000)
         }
-      });
+      })
     },
     generate(n) {
-      var add = 1;
-      var max = 12 - add;
+      var add = 1
+      var max = 12 - add
 
       if (n > max) {
-        return this.generate(max) + this.generate(n - max);
+        return this.generate(max) + this.generate(n - max)
       }
 
-      max = Math.pow(10, n + add);
-      var min = max / 10;
-      var number = Math.floor(Math.random() * (max - min + 1)) + min;
+      max = Math.pow(10, n + add)
+      var min = max / 10
+      var number = Math.floor(Math.random() * (max - min + 1)) + min
 
-      return ("CC" + number).substring(add);
+      return ('CC' + number).substring(add)
     },
     generateTitleView
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
-.myInput /deep/ .v-label {
-  /*left: 0 !important;*/
-}
-
 .app-container {
   .action-container {
     margin-right: 25px;
@@ -377,7 +359,7 @@ export default {
     }
   }
 
-  .role-infor {
+  .role-info {
     margin: 10px 10px 10px;
     background: #fff;
     padding: 20px;
@@ -444,38 +426,38 @@ export default {
   color: #ce5454;
 }
 
-.role-infor /deep/ .v-text-field__slot label.v-label.v-label--active {
+.role-info /deep/ .v-text-field__slot label.v-label.v-label--active {
   left: -8px !important;
   right: auto !important;
 }
 
-.role-infor /deep/ .v-text-field__slot label.v-label {
+.role-info /deep/ .v-text-field__slot label.v-label {
   left: 0px !important;
   right: auto !important;
 }
 
-.role-infor /deep/ .v-text-field--outlined fieldset {
+.role-info /deep/ .v-text-field--outlined fieldset {
   padding-left: 8px;
 }
 
-.role-infor /deep/ .v-input__slot legend {
+.role-info /deep/ .v-input__slot legend {
   text-align: left;
 }
 
-.role-infor /deep/ .v-input__slot {
+.role-info /deep/ .v-input__slot {
   min-height: 40px !important;
 }
 
-.role-infor /deep/ .v-text-field--outlined .v-label {
+.role-info /deep/ .v-text-field--outlined .v-label {
   top: 10px;
 }
 
-.role-infor /deep/ .v-text-field__slot label {
+.role-info /deep/ .v-text-field__slot label {
   font-weight: normal !important;
   font-size: 14px;
 }
 
-.role-infor /deep/ .v-text-field__details {
+.role-info /deep/ .v-text-field__details {
   display: none;
 }
 
@@ -493,13 +475,13 @@ export default {
 }
 
 @media only screen and (max-width: 1450px) {
-  .app-container .role-infor .role-info__inner {
+  .app-container .role-info .role-info__inner {
     flex-basis: 80%;
   }
 }
 
 @media only screen and (max-width: 1024px) {
-  .app-container .role-infor .role-info__inner {
+  .app-container .role-info .role-info__inner {
     flex-basis: 100%;
   }
 }

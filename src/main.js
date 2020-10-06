@@ -2,17 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
 import router from './router'
-import ElementUI from 'element-ui'
 import i18n from './lang' // internationalization
+import ElementUI from 'element-ui'
 import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate'
 import vi from 'vee-validate/dist/locale/vi.json'
 import * as rules from 'vee-validate/dist/rules'
 import pretty from 'pretty'
-import VueParticles from 'vue-particles'
 
 import '@/assets/js/jspmeg.js'
 import '@/styles/index.scss' // global css
-import '@/icons' // icon
 import 'element-ui/lib/theme-chalk/index.css'
 import Vuex from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -25,6 +23,10 @@ import 'vuetify/dist/vuetify.min.css'
 import * as filters from './filters'
 import './plugins/vee-validate'
 import Embed from 'v-video-embed'
+
+import Vuesax from 'vuesax'
+import 'vuesax/dist/vuesax.css'
+Vue.use(Vuesax)
 
 import {
     faChevronLeft,
@@ -76,7 +78,8 @@ import {
     faSignInAlt,
     faWifi,
     faCertificate,
-    faFilePdf
+    faFilePdf,
+    faAngleDoubleUp
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -129,7 +132,8 @@ library.add(
     faSignInAlt,
     faWifi,
     faCertificate,
-    faFilePdf
+    faFilePdf,
+    faAngleDoubleUp
 )
 
 Object.keys(rules).forEach(rule => {
@@ -143,13 +147,8 @@ Vue.component('ValidationProvider', ValidationProvider)
 Vue.config.productionTip = true
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(VueMaterial)
-Vue.use(VueParticles)
 Vue.use(Vuex)
 Vue.prototype.$prettyDom = pretty
-
-import VueLazyload from 'vue-lazyload'
-
-Vue.use(VueLazyload)
 
 Vue.use(ElementUI, {
     i18n: (key, value) => i18n.t(key, value)
@@ -159,9 +158,6 @@ Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key])
 })
 
-import Vuesax from 'vuesax'
-import 'vuesax/dist/vuesax.css'
-Vue.use(Vuesax)
 Vue.directive('click-outside', {
     bind: function(el, binding, vnode) {
         el.eventSetDrag = function() {

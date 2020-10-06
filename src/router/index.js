@@ -5,7 +5,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
 import { getToken } from '@/help/auth'
-import SettingDefaul from '@/help/settingdefault'
+import SettingDefault from '@/help/settingdefault'
 import AppLayout from '@/layout/AppLayout'
 import store from '@/store'
 
@@ -129,7 +129,7 @@ export const asyncRoutes = [
                 name: 'UserRole',
                 meta: {
                     title: 'roleManagement',
-                    icon: 'policy',
+                    icon: 'adjust',
                     permissions: ['Role_View']
                 }
             },
@@ -281,7 +281,6 @@ export const asyncRoutes = [
                 meta: {
                     title: 'RobotMediaManagement',
                     icon: 'perm_media'
-                    // permissions: ['UserMedia_View', 'UserMedia_Delete']
                 }
             },
             {
@@ -292,7 +291,6 @@ export const asyncRoutes = [
                 meta: {
                     title: 'createRobotMedia',
                     icon: 'link'
-                    // permissions: ['UserMedia_Create']
                 }
             },
             {
@@ -445,7 +443,6 @@ export const asyncRoutes = [
                 meta: {
                     title: 'EditRobotAction',
                     icon: 'link'
-                    // permissions: ['RobotVersion_Create']
                 }
             }
         ]
@@ -536,7 +533,6 @@ export const asyncRoutes = [
                 meta: {
                     title: 'createRobotMedia',
                     icon: 'link'
-                    // permissions: ['UserMedia_Create']
                 }
             }
         ]
@@ -565,7 +561,7 @@ router.beforeEach(async(to, from, next) => {
     // start progress bar
     NProgress.start()
     // set page title
-    document.title = SettingDefaul.getPageTitle(to.meta.title)
+    document.title = SettingDefault.getPageTitle(to.meta.title)
     // determine whether the user has logged in
     const hasToken = getToken()
     if (hasToken) {
