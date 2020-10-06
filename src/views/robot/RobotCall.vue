@@ -560,7 +560,7 @@ export default {
           },
           roomName: directionCameraRoomCode,
           width: '100%',
-          // height: '100%',
+          height: '350px',
           parentNode: document.querySelector('#meetrb2')
         }
         const api2 = new JitsiMeetExternalAPI(domain, option2s)
