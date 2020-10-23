@@ -105,7 +105,7 @@
                       </el-col>
 
                       <el-col :span="12">
-                        <ValidationProvider v-slot="{ errors }" rules="required"
+                        <ValidationProvider v-slot="{ errors }" :rules="{regex: /([0-9]{10})\b/}"
                                             :name="generateTitleView('phone', 'veeValidate')">
                           <v-text-field
                               v-model="formCreate.phone"

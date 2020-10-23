@@ -3,6 +3,9 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/help/auth'
 
+console.log(process.env.NODE_ENV)
+console.log(process.env.development)
+
 // create an axios instance
 const service = axios.create({
     baseURL: 'auth/api', // url = base url + request url

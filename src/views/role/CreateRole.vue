@@ -154,10 +154,11 @@ export default {
                     message: this.generateTitleView('successMessage', 'message'),
                     duration: 2000
                   })
+                  window.location.href = '/#/users/role'
                 } else {
                   this.$notify.error({
                     title: this.generateTitleView('error', 'message'),
-                    message: this.generateTitleView('errorMessage', 'message'),
+                    message: res.message,
                     duration: 2000
                   })
                 }

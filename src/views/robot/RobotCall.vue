@@ -168,7 +168,7 @@
             </button>
 
             <button class="action-button camera-button" @click="redirectRobotControl">
-              {{ generateTitleView('robotControl', 'robot') }}
+              Giám sát robot
               <font-awesome-icon icon="arrows-alt" color="#ffffff"/>
             </button>
           </div>
@@ -496,10 +496,9 @@ export default {
       })
       var comunicationCameraDeviceName =
           comunicationCamera != null ? comunicationCamera.labelName : ''
-      var comunicationCameraRoomCode =
-          comunicationCamera != null
-              ? comunicationCamera.jitsiCallRoom
-              : this.robotInfo.code
+      var comunicationCameraRoomCode = comunicationCamera != null ? comunicationCamera.jitsiCallRoom : this.robotInfo.code
+      console.log(this.robotInfo.code)
+
       var directionCameraDeviceName =
           directionCamera != null ? directionCamera.labelName : ''
       var directionCameraRoomCode =
@@ -775,7 +774,6 @@ $bgMap: #fcfcfc;
           img {
             border-radius: 100%;
             width: 90px;
-            height: 90px;
           }
 
         }
@@ -882,7 +880,7 @@ hr {
 }
 
 .call-right__bottom {
-  padding: 5px 15px;
+  padding: 10px 15px;
 
   .notification {
     justify-content: space-between;
@@ -952,11 +950,11 @@ hr {
 }
 
 .bottom #meetrb2{
-  height: unset !important;
+  height: 100%;
 }
 
 .call-right .call-right__top .bottom {
-  height: unset !important;
+  max-height: 300px !important;
   display: inline-block;
 }
 .call-right .call-right__top .robot-name {
@@ -966,6 +964,25 @@ hr {
   margin-top: 4px;
   margin-left: 5px;
 }
+@media screen and (max-height: 800px) {
+  .call-right .call-right__top .bottom {
+    max-height: 230px !important;
+    display: inline-block;
+  }
+}
 
+@media screen and (max-height: 700px) {
+  .call-right .call-right__top .bottom {
+    max-height: 190px !important;
+    display: inline-block;
+  }
+}
+
+@media screen and (max-height: 650px) {
+  .call-right .call-right__top .bottom {
+    max-height: 150px !important;
+    display: inline-block;
+  }
+}
 </style>
 

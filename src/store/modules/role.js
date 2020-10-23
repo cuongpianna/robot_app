@@ -77,7 +77,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             RoleService.create(dataForm)
                 .then(response => {
-                    if (response && response.isSuccess) {
+                    if (response) {
                         resolve(response)
                     } else {
                         throw response

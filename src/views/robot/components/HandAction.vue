@@ -4,98 +4,79 @@
     <div class="hand-action__wrap">
       <div class="left">
         <vibot-button
-          :name="labelActions.connectManual"
-          :list-object="listManualAction"
-          :area-no="areaNo"
-          :is-connect="isAutomatic"
-          :robot-object="robotObject"
-          @emit-action="onDoMissionConnect"
+            :name="labelActions.connectManual"
+            :list-object="listManualAction"
+            :area-no="areaNo"
+            :is-connect="isAutomatic"
+            :robot-object="robotObject"
+            @emit-action="onDoMissionConnect"
         />
-        <action-button
-          :name="labelActions.nangHang"
-          :list-object="listManualAction"
-          :area-no="areaNo"
-          :is-connect="isAutomatic"
-          :robot-object="robotObject"
-          @emit-action="onDoMission"
-        />
-        <action-button
-          :name="labelActions.haHang"
-          :list-object="listManualAction"
-          :area-no="areaNo"
-          :is-connect="isAutomatic"
-          :robot-object="robotObject"
-          @emit-action="onDoMission"
-        />
-        <action-button
-          :name="labelActions.bamDuong"
-          :list-object="listManualAction"
-          :area-no="areaNo"
-          :is-connect="isAutomatic"
-          :robot-object="robotObject"
-          @emit-action="onDoMission"
-        />
+        <action-button v-for="(item, index) in dynamicManualAction"  :list-object="listManualAction"
+                       :area-no="areaNo" :is-connect="isAutomatic" :robot-object="robotObject"
+                       @emit-action="onDoMission" :order="item.orderIndex" :key="index"/>
       </div>
 
       <div class="right">
         <div class="control__inner">
           <div class="rows row1">
             <icon-button
-              :name="labelActions.up"
-              :icon="'arrow-up'"
-              :list-object="listManualAction"
-              :area-no="areaNo"
-              :is-connect="isAutomatic"
-              :robot-object="robotObject"
-              :action-param="actionParram"
-              @emit-action="onDoMission"
+                :name="labelActions.up"
+                :icon="'arrow-up'"
+                :list-object="listManualAction"
+                :area-no="areaNo"
+                :is-connect="isAutomatic"
+                :robot-object="robotObject"
+                :action-param="actionParram"
+                @emit-action="onDoMission"
+                :step="1"
             />
           </div>
           <div class="rows row2">
             <icon-button
-              :name="labelActions.left"
-              :icon="'arrow-left'"
-              :list-object="listManualAction"
-              :area-no="areaNo"
-              :is-connect="isAutomatic"
-              :robot-object="robotObject"
-              :action-param="actionParram"
-              @emit-action="onDoMission"
+                :name="labelActions.left"
+                :icon="'arrow-left'"
+                :list-object="listManualAction"
+                :area-no="areaNo"
+                :is-connect="isAutomatic"
+                :robot-object="robotObject"
+                :action-param="actionParram"
+                @emit-action="onDoMission"
+                :step="2"
             />
             <icon-button
-              :name="labelActions.down"
-              :icon="'pause'"
-              :list-object="listManualAction"
-              :area-no="areaNo"
-              :is-connect="isAutomatic"
-              :action-param="actionParram"
-              :robot-object="robotObject"
-              @emit-action="onDoMission"
+                :name="labelActions.down"
+                :icon="'pause'"
+                :list-object="listManualAction"
+                :area-no="areaNo"
+                :is-connect="isAutomatic"
+                :action-param="actionParram"
+                :robot-object="robotObject"
+                @emit-action="onDoMission"
+                :step="3"
             />
-            <!--            <button class="btnAction" :disabled="isAutomatic" :class="{'disable':isAutomatic }">-->
-            <!--              <font-awesome-icon icon="pause" />-->
-            <!--            </button>-->
             <icon-button
-              :name="labelActions.right"
-              :icon="'arrow-right'"
-              :list-object="listManualAction"
-              :area-no="areaNo"
-              :is-connect="isAutomatic"
-              :action-param="actionParram"
-              :robot-object="robotObject"
-              @emit-action="onDoMission"
+                :name="labelActions.right"
+                :icon="'arrow-right'"
+                :list-object="listManualAction"
+                :area-no="areaNo"
+                :is-connect="isAutomatic"
+                :action-param="actionParram"
+                :robot-object="robotObject"
+                @emit-action="onDoMission"
+                :step="4"
             />
           </div>
           <div class="rows row3">
             <icon-button
-              :name="labelActions.down"
-              :icon="'arrow-down'"
-              :list-object="listManualAction"
-              :area-no="areaNo"
-              :is-connect="isAutomatic"
-              :action-param="actionParram"
-              :robot-object="robotObject"
-              @emit-action="onDoMission"
+                :name="labelActions.down"
+                :icon="'arrow-down'"
+                :list-object="listManualAction"
+                :area-no="areaNo"
+                :is-connect="isAutomatic"
+                :action-param="actionParram"
+                :robot-object="robotObject"
+                @emit-action="onDoMission"
+                step="5"
             />
           </div>
 
@@ -110,25 +91,25 @@
         <div class="dialogSetting">
           <div>
             <span class="realSize">Bước sang trái</span>
-            <v-text-field v-model="actionParram.leftSeed" outlined dense />
+            <v-text-field v-model="actionParram.leftSeed" outlined dense/>
           </div>
           <div>
             <span class="realSize">Bước sang phải</span>
-            <v-text-field v-model="actionParram.rightSeed" outlined dense />
+            <v-text-field v-model="actionParram.rightSeed" outlined dense/>
           </div>
           <div>
             <span class="realSize">Bước tiến</span>
-            <v-text-field v-model="actionParram.forwardSeed" outlined dense />
+            <v-text-field v-model="actionParram.forwardSeed" outlined dense/>
           </div>
           <div>
             <span class="realSize">Bước lùi</span>
-            <v-text-field v-model="actionParram.backwardSeed" outlined dense />
+            <v-text-field v-model="actionParram.backwardSeed" outlined dense/>
           </div>
         </div>
         <md-dialog-actions>
           <md-button
-            class="md-primary"
-            @click="hideDialog()"
+              class="md-primary"
+              @click="hideDialog()"
           >{{ generateTitleView('close', 'camera') }}
           </md-button>
           <button class="btn-control btn-primary" @click="updateActionParram()">Lưu</button>
@@ -205,7 +186,13 @@ export default {
       workStatus: LABEL.robotControl + 'workStatus',
       isAutomatic: LABEL.robotControl + 'isAutomatic',
       listManualAction: LABEL.robotActions + 'listManualAction'
-    })
+    }),
+    dynamicManualAction() {
+      const result = this.listManualAction.filter(obj => {
+        return obj.orderIndex > 5
+      })
+      return result.reverse()
+    }
   },
   mounted() {
     this.getManualListAction()
@@ -298,12 +285,14 @@ $blue1: #409eff;
 }
 
 .hand-action__wrap {
-  display: flex;
+  //display: flex;
   margin-top: 10px;
   width: 100%;
 
   .left {
     margin-right: 20px;
+    display: inline-block;
+    width: 40%;
 
     .btnAction {
       width: 100%;
@@ -343,7 +332,8 @@ $blue1: #409eff;
   }
 
   .right {
-    width: calc(100% - 140px);
+    //width: calc(100% - 140px);
+    display: inline-block;
   }
 }
 
@@ -351,7 +341,7 @@ $blue1: #409eff;
   text-align: center;
 
   button {
-    width: 94px;
+    width: 74px;
     height: 36px;
     line-height: 36px;
     background: #dbdbdb;
@@ -366,7 +356,7 @@ $blue1: #409eff;
   width: 100%;
 }
 
-.btn-control.btn-primary{
+.btn-control.btn-primary {
   background: $blue1;
   color: #fff !important;
   padding: 3px 7px;

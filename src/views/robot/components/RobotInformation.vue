@@ -57,7 +57,7 @@
             Dừng khẩn cấp
           </div>
           <div class="automatic info-item" :class="{'active' : robotStatus.workMode == 1}">
-            <md-icon class="infoIcon">pause_circle_filled</md-icon>
+            <md-icon class="infoIcon">autorenew</md-icon>
             Tự động
           </div>
           <div class="bt info-item" :class="{'active' : robotStatus.workMode == 0}">
@@ -127,7 +127,7 @@ export default {
   },
   methods: {
     redirectVideoCall() {
-      window.location.href = '/#/users/robots/call/' + this.robotObject.id
+      window.location.href = '/#/dashboard'
     },
     updateTime() {
       this.dateNow = moment().format()

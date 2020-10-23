@@ -101,6 +101,8 @@ const actions = {
         return new Promise((resolve, reject) => {
             removeToken()
             resetRouter()
+            commit('SET_TOKEN', '')
+            commit('SET_ROLES', [])
             resolve()
         })
     },

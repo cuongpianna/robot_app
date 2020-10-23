@@ -3,7 +3,7 @@ import request from '@/help/request'
 class RoleService {
   fetchList(current_page, status, name, limit) {
     return request({
-      url: '/role/getAll',
+      url: '/role/getPaging',
       method: 'post',
       data: {
         CurrentPage: current_page,

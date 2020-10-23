@@ -216,6 +216,7 @@ export default {
                   message: this.generateTitleView('successMessage', 'message'),
                   duration: 2000
                 })
+                location.reload()
               } else {
                 this.$notify.error({
                   title: this.generateTitleView('error', 'message'),

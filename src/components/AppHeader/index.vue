@@ -104,7 +104,8 @@ export default {
   methods: {
     async logout() {
       await this.$store.dispatch('auth/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$router.push(`/login`)
     },
     setLang(locale) {
       this.$i18n.locale = locale

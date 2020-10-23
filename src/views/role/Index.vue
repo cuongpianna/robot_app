@@ -149,7 +149,7 @@
                 <span>{{ item.description }}</span>
               </div>
               <div class="full-control">
-                <!--<span>Full Quyền</span>-->
+<!--                <span>Full Quyền</span>-->
                 <el-checkbox :data-module-id="item.id" class="check-all"
                              @change="setOrUnSetFullPermission($event, item.id)"/>
               </div>
@@ -365,6 +365,11 @@ export default {
           }
         }
       }
+
+      this.hiddenPopup()
+      setTimeout(function(){
+        location.reload()
+      }, 500)
     },
     setOrUnSetFullPermission(event, id) {
       if (event) {

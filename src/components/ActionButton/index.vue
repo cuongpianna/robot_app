@@ -33,6 +33,10 @@ export default {
       type: Boolean,
       default: false
     },
+    order: {
+      type: Number,
+      default: () => 1
+    },
     robotObject: {
       type: Object,
       default: () => {
@@ -41,8 +45,6 @@ export default {
   },
   data() {
     return {
-      object: {},
-      title: ''
     }
   },
   watch: {
@@ -50,8 +52,9 @@ export default {
       deep: true,
       handler(oldValue, newValue) {
         const obj = this.listObject.filter((o) => {
-          return o.actionName === this.name
+          return o.orderIndex === this.order
         })
+
         this.object = obj[0]
         if(this.object.actionName.includes('Kết nối')) {
           this.title = 'Kết nối'
@@ -59,6 +62,22 @@ export default {
           this.title = this.object.actionName
         }
       }
+    }
+  },
+  computed: {
+    object() {
+      const obj = this.listObject.filter((o) => {
+        return o.orderIndex === this.order
+      })
+      return obj[0]
+    },
+    title() {
+      if(this.object.actionName.includes('Kết nối')) {
+        var title = 'Kết nối'
+      }else {
+        var title = this.object.actionName
+      }
+      return title
     }
   },
   methods: {

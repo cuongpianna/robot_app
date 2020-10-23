@@ -255,7 +255,7 @@ export default {
           }, 2000)
         } else {
           this.$notify.error({
-            title: this.generateTitleView('doctors', 'message'),
+            title: this.generateTitleView('error', 'message'),
             message: res.message,
             duration: 2000
           })

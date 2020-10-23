@@ -29,7 +29,7 @@ class UsermanagementService {
                 CurrentPage: current_page,
                 PageSize: limit,
                 Data: {
-                    Name: name,
+                    UserName: name,
                     isActive: is_active,
                     filterType: 1,
                     userType: user_type,

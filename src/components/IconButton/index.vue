@@ -1,5 +1,5 @@
 <template>
-  <button class="btnAction" :class="{'disable':isConnect }" :disabled="isConnect" @click="emitAction">
+  <button class="btnAction" :class="{'disable':isConnect }" :disabled="isConnect" @click="emitAction" v-show="step != 0">
     <font-awesome-icon :icon="icon" color="black"/>
   </button>
 </template>
@@ -43,6 +43,10 @@ export default {
       type: Object,
       default: () => {
       }
+    },
+    step: {
+      type: Number,
+      default: () => 0
     }
   },
   data() {
@@ -55,7 +59,7 @@ export default {
       deep: true,
       handler(newValue, oldValue) {
         const obj = this.listObject.filter((o) => {
-          return o.actionName === this.name
+          return o.orderIndex === this.step
         })
         this.object = obj[0]
       }

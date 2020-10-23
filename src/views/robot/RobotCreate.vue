@@ -359,7 +359,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.commit('app/CHANGE_APP_TITLE', 'HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN ROBOT')
+    this.$store.commit('app/CHANGE_APP_TITLE', 'CẤU HÌNH THAM SỐ CỦA ROBOT')
     const robotId = this.$router.currentRoute.params.id
     if (typeof robotId !== 'undefined' && robotId !== null) {
       this.getRobot(robotId)
@@ -388,7 +388,12 @@ export default {
       actGetAllRobotVersion: LABEL.modelRobotVersion + ACT_GET_ALL_ROBOT_VERSION
     }),
     handleSubmitUser() {
-      this.formTitle === this.generateTitleView('editRobot', 'robot') ? this.editRobot() : this.createRobot()
+      const robotId = this.$router.currentRoute.params.id
+      if(robotId != undefined && robotId != 'undefined' && robotId !== null) {
+        this.editRobot()
+      }else {
+        this.createRobot()
+      }
     },
     getRobot(id) {
       this.actGetCurrentRobot(id).then(res => {
@@ -742,7 +747,7 @@ export default {
 
 .robotVersion /deep/ label.v-label {
   right: auto;
-  left: -17px !important;
+  //left: -17px !important;
   position: absolute;
   top: 3px !important;
 }
